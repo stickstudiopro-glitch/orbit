@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Orbit Shooter - Full Screen Space Combat Game</title>
+    <meta name="description" content="Play Orbit Shooter in full screen mode. Battle alien invaders in this intense retro space shooter. Free online game - no download required!">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-cyan: #00ffff;
+            --neon-magenta: #ff00ff;
+            --neon-yellow: #ffff00;
+            --deep-space: #0a0015;
+            --star-white: #ffffff;
+            --danger-red: #ff0040;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--deep-space);
+            color: var(--star-white);
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 200;
+            font-family: 'Orbitron', monospace;
+            font-size: 14px;
+            padding: 12px 24px;
+            background: rgba(0, 255, 255, 0.1);
+            color: var(--neon-cyan);
+            border: 2px solid var(--neon-cyan);
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn:hover {
+            background: var(--neon-cyan);
+            color: var(--deep-space);
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        #gameContainer {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(ellipse at center, #1a0033 0%, #0a0015 100%);
+            overflow: hidden;
+        }
+
+        #gameCanvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            image-rendering: crisp-edges;
+        }
+
+        .hud {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            pointer-events: none;
+            z-index: 10;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .hud-left, .hud-right {
+            background: rgba(0, 255, 255, 0.05);
+            border: 2px solid var(--neon-cyan);
+            padding: 15px 25px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3), inset 0 0 20px rgba(0, 255, 255, 0.1);
+            animation: hudPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes hudPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.3), inset 0 0 20px rgba(0, 255, 255, 0.1); }
+            50% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.5), inset 0 0 30px rgba(0, 255, 255, 0.15); }
+        }
+
+        .stat {
+            font-size: 14px;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
+            display: block;
+        }
+
+        .health-bar {
+            width: 200px;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--neon-cyan);
+            margin-top: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .health-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+            transition: width 0.3s;
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        #startScreen, #gameOverScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(ellipse at center, rgba(26, 0, 51, 0.95) 0%, rgba(10, 0, 21, 0.98) 100%);
+            z-index: 100;
+        }
+
+        .title {
+            font-family: 'Orbitron', monospace;
+            font-size: 120px;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta), var(--neon-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 80px rgba(0, 255, 255, 0.5);
+            margin-bottom: 20px;
+            animation: titleGlow 3s ease-in-out infinite;
+            letter-spacing: 10px;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px var(--neon-cyan)); }
+            50% { filter: drop-shadow(0 0 40px var(--neon-magenta)); }
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: var(--neon-cyan);
+            margin-bottom: 50px;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+        }
+
+        .btn {
+            font-family: 'Orbitron', monospace;
+            font-size: 24px;
+            font-weight: 700;
+            padding: 20px 60px;
+            background: transparent;
+            color: var(--neon-cyan);
+            border: 3px solid var(--neon-cyan);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin: 10px;
+            pointer-events: auto;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--neon-cyan);
+            transition: left 0.3s;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            color: var(--deep-space);
+            box-shadow: 0 0 30px var(--neon-cyan);
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .controls {
+            margin-top: 40px;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            line-height: 2;
+        }
+
+        .controls strong {
+            color: var(--neon-magenta);
+            font-weight: 700;
+        }
+
+        #gameOverScreen .final-score {
+            font-size: 48px;
+            margin: 30px 0;
+            color: var(--neon-yellow);
+            text-shadow: 0 0 20px var(--neon-yellow);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .wave-notification {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron', monospace;
+            font-size: 80px;
+            font-weight: 900;
+            color: var(--neon-yellow);
+            text-shadow: 0 0 40px var(--neon-yellow);
+            pointer-events: none;
+            z-index: 50;
+            animation: waveAnnounce 2s ease-out forwards;
+        }
+
+        @keyframes waveAnnounce {
+            0% { 
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .title { font-size: 60px; }
+            .subtitle { font-size: 16px; }
+            .btn { font-size: 18px; padding: 15px 40px; }
+            .hud-left, .hud-right { padding: 10px 15px; }
+            .stat-value { font-size: 20px; }
+            .back-btn { font-size: 12px; padding: 8px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← Back to Home</a>
+
+    <div id="gameContainer">
+        <div class="stars" id="starfield"></div>
+        <canvas id="gameCanvas"></canvas>
+
+        <div class="hud">
+            <div class="hud-left">
+                <div class="stat">
+                    SCORE
+                    <span class="stat-value" id="scoreDisplay">0</span>
+                </div>
+                <div class="stat">
+                    WAVE
+                    <span class="stat-value" id="waveDisplay">1</span>
+                </div>
+            </div>
+            <div class="hud-right">
+                <div class="stat">
+                    HEALTH
+                    <div class="health-bar">
+                        <div class="health-fill" id="healthFill" style="width: 100%"></div>
+                    </div>
+                </div>
+                <div class="stat">
+                    ENEMIES
+                    <span class="stat-value" id="enemiesDisplay">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="startScreen">
+            <h1 class="title">ORBIT SHOOTER</h1>
+            <p class="subtitle">Defend the Cosmos</p>
+            <button class="btn" id="startBtn">LAUNCH MISSION</button>
+            <div class="controls">
+                <strong>ARROW KEYS</strong> or <strong>WASD</strong> - Navigate<br>
+                <strong>SPACEBAR</strong> - Fire Weapons<br>
+                <strong>MOUSE</strong> - Aim & Shoot
+            </div>
+        </div>
+
+        <div id="gameOverScreen" class="hidden">
+            <h1 class="title">MISSION FAILED</h1>
+            <p class="final-score">FINAL SCORE: <span id="finalScore">0</span></p>
+            <button class="btn" id="restartBtn">RETRY MISSION</button>
+            <a href="index.html" class="btn" style="text-decoration: none; display: inline-block;">MAIN MENU</a>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

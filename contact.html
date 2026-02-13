@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Orbit Shooter Gaming</title>
+    <meta name="description" content="Get in touch with Orbit Shooter Gaming. Send us your feedback, report bugs, or ask questions about the game.">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-cyan: #00ffff;
+            --neon-magenta: #ff00ff;
+            --deep-space: #0a0015;
+            --star-white: #ffffff;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: radial-gradient(ellipse at center, #1a0033 0%, #0a0015 100%);
+            color: var(--star-white);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--neon-cyan);
+            text-decoration: none;
+            font-size: 16px;
+            margin-bottom: 40px;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .intro {
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 60px;
+        }
+
+        .contact-card {
+            background: rgba(0, 255, 255, 0.05);
+            border: 2px solid var(--neon-cyan);
+            padding: 40px;
+            margin-bottom: 40px;
+            transition: all 0.3s;
+        }
+
+        .contact-card:hover {
+            box-shadow: 0 10px 40px rgba(0, 255, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .contact-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 24px;
+            color: var(--neon-cyan);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .contact-info {
+            font-size: 20px;
+            color: var(--neon-magenta);
+            margin-bottom: 10px;
+        }
+
+        .contact-info a {
+            color: var(--neon-magenta);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .contact-info a:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .contact-desc {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .info-box {
+            background: rgba(255, 0, 255, 0.05);
+            border-left: 4px solid var(--neon-magenta);
+            padding: 25px;
+        }
+
+        .info-box h3 {
+            font-family: 'Orbitron', monospace;
+            color: var(--neon-cyan);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .info-box p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        
+        <h1>CONTACT US</h1>
+        <p class="intro">
+            Have questions, feedback, or found a bug? We'd love to hear from you! 
+            Send us an email and we'll get back to you as soon as possible.
+        </p>
+
+        <div class="contact-card">
+            <div class="contact-title">EMAIL SUPPORT</div>
+            <div class="contact-info">
+                <a href="mailto:santoshbandi951@gmail.com">santoshbandi951@gmail.com</a>
+            </div>
+            <p class="contact-desc">
+                Click the email address above to send us a message directly, or copy it to your email client.
+                We typically respond within 24-48 hours.
+            </p>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-box">
+                <h3>🐛 Bug Reports</h3>
+                <p>Found a glitch or bug? Let us know! Include details about what happened and what browser you're using.</p>
+            </div>
+            <div class="info-box">
+                <h3>💡 Suggestions</h3>
+                <p>Have ideas for new features or improvements? We love hearing from our community!</p>
+            </div>
+            <div class="info-box">
+                <h3>❓ Questions</h3>
+                <p>Need help with the game? Have questions about gameplay? We're here to help!</p>
+            </div>
+            <div class="info-box">
+                <h3>⭐ Feedback</h3>
+                <p>Share your thoughts about the game. Your feedback helps us make Orbit Shooter better!</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

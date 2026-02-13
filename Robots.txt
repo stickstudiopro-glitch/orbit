@@ -1,0 +1,10 @@
+# Robots.txt for https://orbitshootergaming.online
+
+User-agent: *
+Allow: /
+
+# Allow all robots to crawl the site
+Disallow:
+
+# Link to the sitemap
+Sitemap: https://orbitshootergaming.online/sitemap.xml
