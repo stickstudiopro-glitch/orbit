@@ -1,351 +1,1062 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play Orbit Shooter - Full Screen Space Combat Game</title>
-    <meta name="description" content="Play Orbit Shooter in full screen mode. Battle alien invaders in this intense retro space shooter. Free online game - no download required!">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>Orbit Shooter Gaming - Play Free Space Game</title>
+<meta name="description" content="Play Orbit Shooter - free online space game for all ages! 100 levels, easy controls, mobile friendly."/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --cyan:#00ffff;--magenta:#ff00ff;--yellow:#ffff00;--green:#00ff88;
+  --bg:#06001a;--red:#ff3366;
+}
+body{
+  font-family:'Rajdhani',sans-serif;
+  background:var(--bg);
+  color:#fff;
+  overflow:hidden;
+  touch-action:none;
+  user-select:none;
+  -webkit-user-select:none;
+  width:100vw;height:100vh;
+}
 
-        :root {
-            --neon-cyan: #00ffff;
-            --neon-magenta: #ff00ff;
-            --neon-yellow: #ffff00;
-            --deep-space: #0a0015;
-            --star-white: #ffffff;
-            --danger-red: #ff0040;
-        }
+/* ── SCREENS ── */
+.screen{
+  position:fixed;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 50% 40%,#1a0033 0%,var(--bg) 70%);
+  z-index:50;text-align:center;padding:20px;
+}
+.screen.hidden{display:none!important;}
 
-        body {
-            font-family: 'Rajdhani', sans-serif;
-            background: var(--deep-space);
-            color: var(--star-white);
-            overflow: hidden;
-            cursor: crosshair;
-        }
+.game-title{
+  font-family:'Orbitron',monospace;
+  font-size:clamp(36px,10vw,100px);
+  font-weight:900;
+  background:linear-gradient(135deg,var(--cyan),var(--magenta),var(--yellow));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:4px;margin-bottom:10px;
+  animation:titleFloat 3s ease-in-out infinite;
+}
+@keyframes titleFloat{0%,100%{filter:drop-shadow(0 0 20px var(--cyan))}50%{filter:drop-shadow(0 0 40px var(--magenta))}}
 
-        /* Back Button */
-        .back-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 200;
-            font-family: 'Orbitron', monospace;
-            font-size: 14px;
-            padding: 12px 24px;
-            background: rgba(0, 255, 255, 0.1);
-            color: var(--neon-cyan);
-            border: 2px solid var(--neon-cyan);
-            text-decoration: none;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
-        }
+.tagline{
+  font-family:'Orbitron',monospace;font-size:clamp(12px,3vw,22px);
+  color:var(--cyan);letter-spacing:4px;margin-bottom:16px;
+  text-shadow:0 0 10px var(--cyan);
+}
+.game-desc{
+  font-size:clamp(14px,2.5vw,18px);color:rgba(255,255,255,.7);
+  max-width:500px;line-height:1.6;margin-bottom:30px;
+}
 
-        .back-btn:hover {
-            background: var(--neon-cyan);
-            color: var(--deep-space);
-            box-shadow: 0 0 20px var(--neon-cyan);
-        }
+/* BIG BUTTONS */
+.btn-big{
+  font-family:'Orbitron',monospace;font-size:clamp(16px,3.5vw,26px);
+  font-weight:700;padding:18px 50px;
+  background:linear-gradient(135deg,var(--cyan),var(--magenta));
+  color:var(--bg);border:none;border-radius:50px;
+  cursor:pointer;letter-spacing:2px;
+  box-shadow:0 0 30px rgba(0,255,255,.4);
+  transition:all .2s;margin:8px;
+  min-width:200px;
+}
+.btn-big:hover,.btn-big:active{transform:scale(1.07);box-shadow:0 0 50px rgba(0,255,255,.7);}
+.btn-outline{
+  font-family:'Orbitron',monospace;font-size:clamp(14px,2.5vw,18px);
+  font-weight:700;padding:14px 36px;
+  background:transparent;color:var(--cyan);
+  border:2px solid var(--cyan);border-radius:50px;
+  cursor:pointer;letter-spacing:2px;
+  transition:all .2s;margin:6px;
+}
+.btn-outline:hover,.btn-outline:active{background:var(--cyan);color:var(--bg);}
 
-        #gameContainer {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            background: radial-gradient(ellipse at center, #1a0033 0%, #0a0015 100%);
-            overflow: hidden;
-        }
+/* LEVEL BADGE */
+.level-badge{
+  font-family:'Orbitron',monospace;font-size:clamp(13px,2vw,18px);
+  background:rgba(0,255,255,.12);border:2px solid var(--cyan);
+  border-radius:30px;padding:8px 24px;
+  color:var(--cyan);margin-bottom:20px;
+  text-shadow:0 0 8px var(--cyan);
+}
 
-        #gameCanvas {
-            display: block;
-            width: 100%;
-            height: 100%;
-            image-rendering: crisp-edges;
-        }
+/* STARS BG */
+.stars-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.star-dot{position:absolute;border-radius:50%;background:#fff;animation:twinkle 3s infinite;}
+@keyframes twinkle{0%,100%{opacity:.2}50%{opacity:1}}
 
-        .hud {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            pointer-events: none;
-            z-index: 10;
-            font-family: 'Orbitron', monospace;
-        }
+/* ── GAME CONTAINER ── */
+#gameWrap{position:fixed;inset:0;display:none;}
+#gameWrap.active{display:block;}
+canvas{display:block;width:100%;height:100%;}
 
-        .hud-left, .hud-right {
-            background: rgba(0, 255, 255, 0.05);
-            border: 2px solid var(--neon-cyan);
-            padding: 15px 25px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3), inset 0 0 20px rgba(0, 255, 255, 0.1);
-            animation: hudPulse 2s ease-in-out infinite;
-        }
+/* ── HUD ── */
+.hud{
+  position:fixed;top:0;left:0;width:100%;
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding:10px 14px;z-index:20;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(6,0,26,.8),transparent);
+}
+.hud-box{
+  background:rgba(0,255,255,.08);border:1px solid rgba(0,255,255,.3);
+  border-radius:12px;padding:8px 14px;backdrop-filter:blur(8px);
+}
+.hud-label{font-family:'Orbitron',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.5);margin-bottom:2px;}
+.hud-val{font-family:'Orbitron',monospace;font-size:clamp(18px,4vw,28px);font-weight:900;color:var(--cyan);text-shadow:0 0 10px var(--cyan);}
+.health-bar{width:100px;height:12px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden;margin-top:4px;}
+.health-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));border-radius:6px;transition:width .3s;}
+.hud-center{display:flex;flex-direction:column;align-items:center;gap:2px;}
+.level-pill{font-family:'Orbitron',monospace;font-size:11px;background:rgba(255,0,255,.15);border:1px solid var(--magenta);border-radius:20px;padding:3px 12px;color:var(--magenta);}
 
-        @keyframes hudPulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.3), inset 0 0 20px rgba(0, 255, 255, 0.1); }
-            50% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.5), inset 0 0 30px rgba(0, 255, 255, 0.15); }
-        }
+/* ── WAVE BANNER ── */
+#waveBanner{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:'Orbitron',monospace;font-size:clamp(30px,8vw,70px);font-weight:900;
+  color:var(--yellow);text-shadow:0 0 30px var(--yellow);
+  pointer-events:none;z-index:40;
+  animation:wavePop 2.2s ease forwards;
+}
+@keyframes wavePop{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}
+  30%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}
+  70%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1)}
+}
 
-        .stat {
-            font-size: 14px;
-            margin-bottom: 8px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
+/* ── TOUCH CONTROLS ── */
+#touchControls{
+  position:fixed;bottom:0;left:0;width:100%;
+  display:none;z-index:30;padding:10px;
+  pointer-events:none;
+}
+@media (pointer:coarse){#touchControls{display:flex;justify-content:space-between;align-items:flex-end;}}
 
-        .stat-value {
-            font-size: 28px;
-            font-weight: 900;
-            color: var(--neon-cyan);
-            text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
-            display: block;
-        }
+.dpad{
+  position:relative;width:150px;height:150px;pointer-events:auto;
+}
+.dpad-btn{
+  position:absolute;width:50px;height:50px;
+  background:rgba(0,255,255,.15);border:2px solid rgba(0,255,255,.4);
+  border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:22px;cursor:pointer;transition:background .1s;
+  -webkit-tap-highlight-color:transparent;
+}
+.dpad-btn:active,.dpad-btn.pressed{background:rgba(0,255,255,.45);}
+.dpad-up{top:0;left:50px;}
+.dpad-down{bottom:0;left:50px;}
+.dpad-left{left:0;top:50px;}
+.dpad-right{right:0;top:50px;}
+.dpad-center{top:50px;left:50px;background:rgba(255,255,255,.05);font-size:14px;color:rgba(255,255,255,.3);}
 
-        .health-bar {
-            width: 200px;
-            height: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid var(--neon-cyan);
-            margin-top: 5px;
-            position: relative;
-            overflow: hidden;
-        }
+.fire-btn{
+  width:90px;height:90px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,50,100,.6),rgba(255,0,60,.2));
+  border:3px solid var(--red);
+  font-family:'Orbitron',monospace;font-size:14px;font-weight:900;
+  color:#fff;letter-spacing:1px;
+  cursor:pointer;pointer-events:auto;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  text-shadow:0 0 8px var(--red);
+  box-shadow:0 0 20px rgba(255,50,100,.4);
+  transition:all .1s;
+  -webkit-tap-highlight-color:transparent;
+}
+.fire-btn:active,.fire-btn.pressed{background:radial-gradient(circle,rgba(255,50,100,.9),rgba(255,0,60,.5));transform:scale(.92);}
 
-        .health-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
-            transition: width 0.3s;
-            box-shadow: 0 0 20px var(--neon-cyan);
-        }
+/* ── PAUSE MENU ── */
+#pauseMenu{
+  position:fixed;inset:0;background:rgba(6,0,26,.9);
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  z-index:60;backdrop-filter:blur(10px);
+}
+#pauseMenu.active{display:flex;}
+.pause-title{font-family:'Orbitron',monospace;font-size:clamp(28px,7vw,64px);font-weight:900;color:var(--cyan);margin-bottom:30px;text-shadow:0 0 20px var(--cyan);}
 
-        #startScreen, #gameOverScreen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: radial-gradient(ellipse at center, rgba(26, 0, 51, 0.95) 0%, rgba(10, 0, 21, 0.98) 100%);
-            z-index: 100;
-        }
+/* ── PAUSE BTN ── */
+#pauseBtn{
+  position:fixed;top:12px;right:14px;z-index:25;
+  background:rgba(0,255,255,.1);border:1px solid rgba(0,255,255,.3);
+  border-radius:10px;padding:8px 14px;
+  font-family:'Orbitron',monospace;font-size:11px;color:var(--cyan);
+  cursor:pointer;pointer-events:auto;letter-spacing:1px;
+}
 
-        .title {
-            font-family: 'Orbitron', monospace;
-            font-size: 120px;
-            font-weight: 900;
-            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta), var(--neon-yellow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 80px rgba(0, 255, 255, 0.5);
-            margin-bottom: 20px;
-            animation: titleGlow 3s ease-in-out infinite;
-            letter-spacing: 10px;
-        }
+/* ── GAME OVER ── */
+#gameOverScreen .big-score{
+  font-family:'Orbitron',monospace;font-size:clamp(20px,5vw,48px);
+  color:var(--yellow);text-shadow:0 0 20px var(--yellow);margin:16px 0;
+}
+.go-stats{
+  display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-bottom:24px;
+}
+.go-stat{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);
+  border-radius:14px;padding:14px 24px;
+  font-family:'Orbitron',monospace;font-size:13px;
+}
+.go-stat span{display:block;font-size:22px;color:var(--cyan);margin-top:4px;}
 
-        @keyframes titleGlow {
-            0%, 100% { filter: drop-shadow(0 0 20px var(--neon-cyan)); }
-            50% { filter: drop-shadow(0 0 40px var(--neon-magenta)); }
-        }
+/* ── WIN SCREEN ── */
+#winScreen .win-title{
+  font-family:'Orbitron',monospace;font-size:clamp(28px,8vw,80px);font-weight:900;
+  background:linear-gradient(135deg,var(--yellow),var(--green),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:10px;
+  animation:titleFloat 2s ease-in-out infinite;
+}
 
-        .subtitle {
-            font-size: 24px;
-            color: var(--neon-cyan);
-            margin-bottom: 50px;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-        }
-
-        .btn {
-            font-family: 'Orbitron', monospace;
-            font-size: 24px;
-            font-weight: 700;
-            padding: 20px 60px;
-            background: transparent;
-            color: var(--neon-cyan);
-            border: 3px solid var(--neon-cyan);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin: 10px;
-            pointer-events: auto;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--neon-cyan);
-            transition: left 0.3s;
-            z-index: -1;
-        }
-
-        .btn:hover {
-            color: var(--deep-space);
-            box-shadow: 0 0 30px var(--neon-cyan);
-        }
-
-        .btn:hover::before {
-            left: 0;
-        }
-
-        .controls {
-            margin-top: 40px;
-            font-size: 18px;
-            color: rgba(255, 255, 255, 0.7);
-            text-align: center;
-            line-height: 2;
-        }
-
-        .controls strong {
-            color: var(--neon-magenta);
-            font-weight: 700;
-        }
-
-        #gameOverScreen .final-score {
-            font-size: 48px;
-            margin: 30px 0;
-            color: var(--neon-yellow);
-            text-shadow: 0 0 20px var(--neon-yellow);
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .stars {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        .wave-notification {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: 'Orbitron', monospace;
-            font-size: 80px;
-            font-weight: 900;
-            color: var(--neon-yellow);
-            text-shadow: 0 0 40px var(--neon-yellow);
-            pointer-events: none;
-            z-index: 50;
-            animation: waveAnnounce 2s ease-out forwards;
-        }
-
-        @keyframes waveAnnounce {
-            0% { 
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.5);
-            }
-            50% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1.2);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(1);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .title { font-size: 60px; }
-            .subtitle { font-size: 16px; }
-            .btn { font-size: 18px; padding: 15px 40px; }
-            .hud-left, .hud-right { padding: 10px 15px; }
-            .stat-value { font-size: 20px; }
-            .back-btn { font-size: 12px; padding: 8px 16px; }
-        }
-    </style>
+/* Floating particles on screens */
+.confetti{position:absolute;width:8px;height:8px;border-radius:2px;animation:fall linear infinite;}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+</style>
 </head>
 <body>
-    <a href="index.html" class="back-btn">← Back to Home</a>
 
-    <div id="gameContainer">
-        <div class="stars" id="starfield"></div>
-        <canvas id="gameCanvas"></canvas>
+<!-- ══════════════════════════════════════════
+     START SCREEN
+════════════════════════════════════════════ -->
+<div class="screen" id="startScreen">
+  <div class="stars-bg" id="startStars"></div>
+  <div class="game-title">ORBIT<br>SHOOTER</div>
+  <div class="tagline">🚀 DEFEND THE COSMOS</div>
+  <p class="game-desc">Battle alien invaders across 100 epic levels!<br>Easy for beginners, wild for experts. Let's go!</p>
+  <button class="btn-big" id="startBtn">▶ PLAY NOW</button>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px;">
+    <button class="btn-outline" id="howBtn">HOW TO PLAY</button>
+    <a href="index.html" class="btn-outline" style="text-decoration:none;">HOME</a>
+  </div>
+  <div style="margin-top:24px;font-size:13px;color:rgba(255,255,255,.4);font-family:'Orbitron',monospace;letter-spacing:2px;">
+    100 LEVELS · MOBILE FRIENDLY · FREE
+  </div>
+</div>
 
-        <div class="hud">
-            <div class="hud-left">
-                <div class="stat">
-                    SCORE
-                    <span class="stat-value" id="scoreDisplay">0</span>
-                </div>
-                <div class="stat">
-                    WAVE
-                    <span class="stat-value" id="waveDisplay">1</span>
-                </div>
-            </div>
-            <div class="hud-right">
-                <div class="stat">
-                    HEALTH
-                    <div class="health-bar">
-                        <div class="health-fill" id="healthFill" style="width: 100%"></div>
-                    </div>
-                </div>
-                <div class="stat">
-                    ENEMIES
-                    <span class="stat-value" id="enemiesDisplay">0</span>
-                </div>
-            </div>
-        </div>
-
-        <div id="startScreen">
-            <h1 class="title">ORBIT SHOOTER</h1>
-            <p class="subtitle">Defend the Cosmos</p>
-            <button class="btn" id="startBtn">LAUNCH MISSION</button>
-            <div class="controls">
-                <strong>ARROW KEYS</strong> or <strong>WASD</strong> - Navigate<br>
-                <strong>SPACEBAR</strong> - Fire Weapons<br>
-                <strong>MOUSE</strong> - Aim & Shoot
-            </div>
-        </div>
-
-        <div id="gameOverScreen" class="hidden">
-            <h1 class="title">MISSION FAILED</h1>
-            <p class="final-score">FINAL SCORE: <span id="finalScore">0</span></p>
-            <button class="btn" id="restartBtn">RETRY MISSION</button>
-            <a href="index.html" class="btn" style="text-decoration: none; display: inline-block;">MAIN MENU</a>
-        </div>
+<!-- ══════════════════════════════════════════
+     HOW TO PLAY SCREEN
+════════════════════════════════════════════ -->
+<div class="screen hidden" id="howScreen">
+  <div class="stars-bg" id="howStars"></div>
+  <div class="game-title" style="font-size:clamp(24px,6vw,60px);">HOW TO PLAY</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;max-width:600px;margin:16px auto 24px;">
+    <div style="background:rgba(0,255,255,.08);border:2px solid var(--cyan);border-radius:16px;padding:16px;text-align:center;">
+      <div style="font-size:32px;margin-bottom:8px;">🖱️</div>
+      <div style="font-family:'Orbitron',monospace;font-size:11px;color:var(--cyan);margin-bottom:4px;">MOUSE/TOUCH</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.7);">Move to aim<br>Click/Tap to shoot</div>
     </div>
+    <div style="background:rgba(0,255,255,.08);border:2px solid var(--cyan);border-radius:16px;padding:16px;text-align:center;">
+      <div style="font-size:32px;margin-bottom:8px;">⌨️</div>
+      <div style="font-family:'Orbitron',monospace;font-size:11px;color:var(--cyan);margin-bottom:4px;">KEYBOARD</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.7);">WASD / Arrows<br>SPACE to shoot</div>
+    </div>
+    <div style="background:rgba(0,255,255,.08);border:2px solid var(--cyan);border-radius:16px;padding:16px;text-align:center;">
+      <div style="font-size:32px;margin-bottom:8px;">📱</div>
+      <div style="font-family:'Orbitron',monospace;font-size:11px;color:var(--cyan);margin-bottom:4px;">MOBILE</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.7);">D-Pad to move<br>BIG button fires</div>
+    </div>
+    <div style="background:rgba(255,0,255,.08);border:2px solid var(--magenta);border-radius:16px;padding:16px;text-align:center;">
+      <div style="font-size:32px;margin-bottom:8px;">⭐</div>
+      <div style="font-family:'Orbitron',monospace;font-size:11px;color:var(--magenta);margin-bottom:4px;">POWERUPS</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.7);">Grab stars<br>for bonuses!</div>
+    </div>
+  </div>
+  <div style="background:rgba(0,255,136,.08);border:2px solid var(--green);border-radius:16px;padding:16px;max-width:480px;text-align:left;margin-bottom:24px;">
+    <div style="font-family:'Orbitron',monospace;font-size:12px;color:var(--green);margin-bottom:10px;">⚡ PRO TIPS</div>
+    <div style="font-size:14px;color:rgba(255,255,255,.8);line-height:2;">
+      🟢 Keep moving — standing still is dangerous!<br>
+      🔴 Enemy bullets are RED — dodge them!<br>
+      ⭐ Grab glowing stars for health & power!<br>
+      🚀 Clear all enemies to advance to next level!
+    </div>
+  </div>
+  <button class="btn-big" id="howStartBtn">▶ START GAME</button>
+  <button class="btn-outline" style="margin-top:8px;" onclick="show('startScreen')">← BACK</button>
+</div>
 
-    <script src="game.js"></script>
+<!-- ══════════════════════════════════════════
+     GAME CANVAS
+════════════════════════════════════════════ -->
+<div id="gameWrap">
+  <canvas id="gameCanvas"></canvas>
+
+  <!-- HUD -->
+  <div class="hud">
+    <div class="hud-box">
+      <div class="hud-label">SCORE</div>
+      <div class="hud-val" id="hudScore">0</div>
+    </div>
+    <div class="hud-box hud-center">
+      <div class="level-pill" id="hudLevel">LEVEL 1</div>
+      <div class="hud-label" style="margin-top:4px;">ENEMIES</div>
+      <div class="hud-val" id="hudEnemies" style="font-size:18px;">0</div>
+    </div>
+    <div class="hud-box">
+      <div class="hud-label">HEALTH</div>
+      <div class="health-bar"><div class="health-fill" id="healthFill" style="width:100%"></div></div>
+      <div class="hud-label" style="margin-top:6px;">LIVES</div>
+      <div id="hudLives" style="font-size:18px;color:var(--red);letter-spacing:2px;">❤️❤️❤️</div>
+    </div>
+  </div>
+
+  <!-- Pause btn -->
+  <button id="pauseBtn">⏸ PAUSE</button>
+
+  <!-- Touch d-pad -->
+  <div id="touchControls">
+    <div class="dpad" id="dpad">
+      <div class="dpad-btn dpad-up" id="dUp">▲</div>
+      <div class="dpad-btn dpad-down" id="dDown">▼</div>
+      <div class="dpad-btn dpad-left" id="dLeft">◀</div>
+      <div class="dpad-btn dpad-right" id="dRight">▶</div>
+      <div class="dpad-btn dpad-center">✛</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:auto;">
+      <div style="font-family:'Orbitron',monospace;font-size:10px;color:rgba(255,255,255,.4);letter-spacing:1px;">AUTO-FIRE: <span id="autoLabel">OFF</span></div>
+      <button class="btn-outline" style="padding:6px 16px;font-size:11px;border-radius:20px;" id="autoBtn">AUTO FIRE</button>
+      <button class="fire-btn" id="fireBtn">🔥<br>FIRE</button>
+    </div>
+  </div>
+</div>
+
+<!-- Wave banner -->
+<div id="waveBanner" style="display:none;"></div>
+
+<!-- ══════════════════════════════════════════
+     PAUSE MENU
+════════════════════════════════════════════ -->
+<div id="pauseMenu">
+  <div class="pause-title">⏸ PAUSED</div>
+  <button class="btn-big" id="resumeBtn">▶ RESUME</button>
+  <button class="btn-outline" style="margin-top:12px;" id="quitBtn">🏠 QUIT TO MENU</button>
+</div>
+
+<!-- ══════════════════════════════════════════
+     GAME OVER
+════════════════════════════════════════════ -->
+<div class="screen hidden" id="gameOverScreen">
+  <div class="stars-bg" id="goStars"></div>
+  <div style="font-family:'Orbitron',monospace;font-size:clamp(28px,7vw,70px);font-weight:900;color:var(--red);text-shadow:0 0 30px var(--red);margin-bottom:8px;">MISSION<br>FAILED</div>
+  <div class="big-score">SCORE: <span id="finalScore">0</span></div>
+  <div class="go-stats">
+    <div class="go-stat">LEVEL REACHED<span id="goLevel">1</span></div>
+    <div class="go-stat">ENEMIES DEFEATED<span id="goKills">0</span></div>
+    <div class="go-stat">TIME SURVIVED<span id="goTime">0s</span></div>
+  </div>
+  <button class="btn-big" id="retryBtn">🔄 TRY AGAIN</button>
+  <button class="btn-outline" style="margin-top:12px;" onclick="show('startScreen');stopGame()">🏠 MAIN MENU</button>
+</div>
+
+<!-- ══════════════════════════════════════════
+     WIN SCREEN
+════════════════════════════════════════════ -->
+<div class="screen hidden" id="winScreen">
+  <div id="winConfetti"></div>
+  <div class="win-title">🏆 YOU WIN!</div>
+  <div style="font-family:'Orbitron',monospace;font-size:clamp(14px,3vw,24px);color:var(--yellow);margin-bottom:16px;">ALL 100 LEVELS COMPLETE!</div>
+  <div class="big-score" style="color:var(--green);">FINAL SCORE: <span id="winScore">0</span></div>
+  <button class="btn-big" style="margin-top:20px;" onclick="show('startScreen');stopGame()">🏠 PLAY AGAIN</button>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  SCREEN MANAGEMENT
+// ═══════════════════════════════════════════════
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
+  const el = document.getElementById(id);
+  if(el) el.classList.remove('hidden');
+}
+function showGame(){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
+  document.getElementById('gameWrap').classList.add('active');
+}
+
+// Generate starfield for screens
+function makeStars(containerId, count=60){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  for(let i=0;i<count;i++){
+    const d = document.createElement('div');
+    d.className='star-dot';
+    const s = Math.random()*3+1;
+    d.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*2}s`;
+    c.appendChild(d);
+  }
+}
+makeStars('startStars'); makeStars('howStars'); makeStars('goStars');
+
+// ═══════════════════════════════════════════════
+//  CANVAS + GAME ENGINE
+// ═══════════════════════════════════════════════
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+function resize(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// ── GAME STATE ──
+const GS = {
+  running: false,
+  paused: false,
+  level: 1,
+  score: 0,
+  kills: 0,
+  lives: 3,
+  health: 100,
+  maxHealth: 100,
+  startTime: 0,
+  autoFire: false,
+  autoFireTimer: 0,
+};
+
+// ── PLAYER ──
+const player = {
+  x:0, y:0,
+  w:36, h:36,
+  speed:5,
+  vx:0, vy:0,
+  color:'#00ffff',
+  invincible:0,
+  angle:0,
+};
+
+// ── COLLECTIONS ──
+let bullets=[], enemyBullets=[], enemies=[], particles=[], powerups=[], stars=[];
+
+// ── INPUT ──
+const keys={};
+let mouseX=200, mouseY=200;
+let touchMove={x:0,y:0};
+const dpadState={up:false,down:false,left:false,right:false};
+
+// ══════════════════════════════════════════════
+//  LEVEL CONFIG — 100 LEVELS
+// ══════════════════════════════════════════════
+function getLevelConfig(level){
+  // Exponential scaling — early levels super easy
+  const easy = Math.min(level, 10);
+  const mid   = Math.max(0, Math.min(level-10, 40));
+  const hard  = Math.max(0, level-50);
+
+  return {
+    enemies:   Math.floor(3 + easy*0.7 + mid*0.5 + hard*0.3),
+    speed:     0.5 + easy*0.08 + mid*0.04 + hard*0.03,
+    health:    1 + Math.floor(level/8),
+    shootRate: Math.max(0.005, 0.025 - level*0.0002),
+    bulletSpd: 2.5 + level*0.04,
+    bossEvery: (level % 10 === 0),
+    powerupChance: 0.25,
+    pattern:   level < 5   ? 'line'
+             : level < 15  ? 'wave'
+             : level < 30  ? 'grid'
+             : level < 50  ? 'spiral'
+             :                'chaos',
+  };
+}
+
+// ══════════════════════════════════════════════
+//  SPAWN ENEMIES
+// ══════════════════════════════════════════════
+function spawnWave(){
+  const cfg = getLevelConfig(GS.level);
+  const count = cfg.enemies + (cfg.bossEvery ? 1 : 0);
+
+  for(let i=0; i<count; i++){
+    const isBoss = cfg.bossEvery && i === count-1;
+    const sz = isBoss ? 48 : 18+Math.random()*14;
+    let ex, ey=-80;
+
+    if(cfg.pattern==='line'){
+      ex = (i+1)*(canvas.width/(count+1));
+    } else if(cfg.pattern==='grid'){
+      const cols = Math.ceil(Math.sqrt(count));
+      ex = ((i%cols)+1)*(canvas.width/(cols+1));
+      ey = -80 - Math.floor(i/cols)*80;
+    } else {
+      ex = 60 + Math.random()*(canvas.width-120);
+      ey = -60 - Math.random()*300;
+    }
+
+    // Color varies by level range
+    const hue = isBoss ? 0 : (280 + GS.level*12)%360;
+
+    enemies.push({
+      x:ex, y:ey,
+      w:sz, h:sz,
+      hp: isBoss ? cfg.health*5 : cfg.health,
+      maxHp: isBoss ? cfg.health*5 : cfg.health,
+      speed: isBoss ? cfg.speed*0.6 : cfg.speed*(0.7+Math.random()*0.6),
+      color: isBoss ? '#ff3366' : `hsl(${hue},100%,55%)`,
+      glowColor: isBoss ? '#ff0040' : `hsl(${hue},100%,70%)`,
+      shootTimer: Math.random()*120,
+      shootRate: cfg.shootRate,
+      bulletSpd: cfg.bulletSpd,
+      boss: isBoss,
+      vx: cfg.pattern==='wave' ? Math.sin(i)*2 : 0,
+      wobble: Math.random()*Math.PI*2,
+    });
+  }
+}
+
+// ══════════════════════════════════════════════
+//  POWERUP SPAWN
+// ══════════════════════════════════════════════
+function spawnPowerup(x,y){
+  if(Math.random()>getLevelConfig(GS.level).powerupChance) return;
+  const types=['health','shield','rapid','bomb'];
+  const type=types[Math.floor(Math.random()*types.length)];
+  const icons={health:'❤️',shield:'🛡️',rapid:'⚡',bomb:'💣'};
+  powerups.push({x,y,vx:(Math.random()-.5)*2,vy:1.5,type,icon:icons[type],life:300,r:16});
+}
+
+// ══════════════════════════════════════════════
+//  DRAW HELPERS
+// ══════════════════════════════════════════════
+function drawShip(x,y,angle,w,color,glow){
+  ctx.save();
+  ctx.translate(x,y);
+  ctx.rotate(angle);
+  ctx.shadowBlur=20; ctx.shadowColor=glow||color;
+  ctx.beginPath();
+  ctx.moveTo(0,-w); ctx.lineTo(-w*.6,w*.7); ctx.lineTo(0,w*.4); ctx.lineTo(w*.6,w*.7);
+  ctx.closePath();
+  ctx.fillStyle=color; ctx.fill();
+  // Cockpit
+  ctx.beginPath(); ctx.arc(0,-w*.2,w*.22,0,Math.PI*2);
+  ctx.fillStyle=glow||'#ff00ff'; ctx.fill();
+  // Engine
+  ctx.beginPath(); ctx.ellipse(0,w*.5,w*.25,w*.18,0,0,Math.PI*2);
+  ctx.fillStyle='rgba(255,200,0,.6)'; ctx.fill();
+  ctx.restore();
+}
+
+function drawEnemy(e){
+  ctx.save();
+  ctx.translate(e.x,e.y);
+  ctx.shadowBlur=e.boss?35:18; ctx.shadowColor=e.glowColor;
+  if(e.boss){
+    // Boss: octagon
+    ctx.beginPath();
+    for(let i=0;i<8;i++){const a=Math.PI*2/8*i; ctx.lineTo(Math.cos(a)*e.w,Math.sin(a)*e.w);}
+    ctx.closePath(); ctx.fillStyle=e.color; ctx.fill();
+    // Boss cross
+    ctx.strokeStyle='rgba(255,255,255,.3)'; ctx.lineWidth=3;
+    ctx.beginPath(); ctx.moveTo(-e.w,0); ctx.lineTo(e.w,0); ctx.moveTo(0,-e.w); ctx.lineTo(0,e.w); ctx.stroke();
+    // Boss health bar
+    const bw=e.w*2.5;
+    ctx.fillStyle='rgba(0,0,0,.6)'; ctx.fillRect(-bw/2,e.w+8,bw,8);
+    ctx.fillStyle=e.color; ctx.fillRect(-bw/2,e.w+8,bw*(e.hp/e.maxHp),8);
+  } else {
+    // Hexagon
+    ctx.beginPath();
+    for(let i=0;i<6;i++){const a=Math.PI/3*i; ctx.lineTo(Math.cos(a)*e.w,Math.sin(a)*e.w);}
+    ctx.closePath(); ctx.fillStyle=e.color; ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.4)'; ctx.lineWidth=1.5; ctx.stroke();
+  }
+  // HP pips (non-boss)
+  if(!e.boss && e.maxHp>1){
+    const pip=6, gap=3, total=e.maxHp*(pip+gap);
+    for(let p=0;p<e.maxHp;p++){
+      ctx.fillStyle = p<e.hp ? e.color : 'rgba(255,255,255,.15)';
+      ctx.beginPath(); ctx.arc(-total/2 + p*(pip+gap)+pip/2, e.w+10, pip/2,0,Math.PI*2); ctx.fill();
+    }
+  }
+  ctx.restore();
+}
+
+function drawBullet(b, isEnemy){
+  ctx.save();
+  ctx.shadowBlur=15; ctx.shadowColor=b.color;
+  ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
+  ctx.fillStyle=b.color; ctx.fill();
+  // Trail
+  ctx.globalAlpha=.3; ctx.beginPath(); ctx.arc(b.x-b.vx*2,b.y-b.vy*2,b.r*.7,0,Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawParticle(p){
+  ctx.save();
+  ctx.globalAlpha=p.life/p.maxLife;
+  ctx.shadowBlur=10; ctx.shadowColor=p.color;
+  ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+  ctx.fillStyle=p.color; ctx.fill();
+  ctx.restore();
+}
+
+function drawPowerup(pu){
+  ctx.save();
+  ctx.translate(pu.x,pu.y);
+  ctx.shadowBlur=20; ctx.shadowColor=pu.type==='health'?'#ff88aa':'#ffffaa';
+  // Glow ring
+  ctx.beginPath(); ctx.arc(0,0,pu.r+4,0,Math.PI*2);
+  ctx.strokeStyle=pu.type==='health'?'#ff4488':'#ffdd00';
+  ctx.lineWidth=2; ctx.stroke();
+  // Icon
+  ctx.font=`${pu.r*1.5}px serif`; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText(pu.icon,0,0);
+  ctx.restore();
+}
+
+// ══════════════════════════════════════════════
+//  PARTICLES
+// ══════════════════════════════════════════════
+function explode(x,y,color,count=12){
+  for(let i=0;i<count;i++){
+    const spd=1.5+Math.random()*4;
+    const angle=Math.random()*Math.PI*2;
+    particles.push({
+      x,y,
+      vx:Math.cos(angle)*spd,
+      vy:Math.sin(angle)*spd,
+      r:1.5+Math.random()*3,
+      color,
+      life:40+Math.random()*30,
+      maxLife:70,
+    });
+  }
+}
+
+// ══════════════════════════════════════════════
+//  SHOOTING
+// ══════════════════════════════════════════════
+function playerShoot(){
+  const angle = Math.atan2(mouseY-player.y, mouseX-player.x);
+  const spd=12 + Math.min(GS.level,20)*0.15;
+  bullets.push({
+    x:player.x, y:player.y,
+    vx:Math.cos(angle)*spd, vy:Math.sin(angle)*spd,
+    r:5, color:'#ffff00',
+  });
+  // Level 20+: double shot
+  if(GS.level>=20){
+    bullets.push({
+      x:player.x, y:player.y,
+      vx:Math.cos(angle+.2)*spd, vy:Math.sin(angle+.2)*spd,
+      r:4, color:'#ffaa00',
+    });
+  }
+  // Level 40+: triple shot
+  if(GS.level>=40){
+    bullets.push({
+      x:player.x, y:player.y,
+      vx:Math.cos(angle-.2)*spd, vy:Math.sin(angle-.2)*spd,
+      r:4, color:'#ff8800',
+    });
+  }
+}
+
+// ══════════════════════════════════════════════
+//  UPDATE
+// ══════════════════════════════════════════════
+let rapidFire=0, shield=false, shieldTimer=0;
+const SHOOT_COOLDOWN_BASE=18;
+let shootCooldown=0;
+
+function update(){
+  // ── Player movement ──
+  let dx=0, dy=0;
+  if(keys['arrowleft']||keys['a']||dpadState.left)  dx=-1;
+  if(keys['arrowright']||keys['d']||dpadState.right) dx=1;
+  if(keys['arrowup']||keys['w']||dpadState.up)       dy=-1;
+  if(keys['arrowdown']||keys['s']||dpadState.down)   dy=1;
+  if(dx&&dy){dx*=.707;dy*=.707;}
+  player.vx = dx*player.speed;
+  player.vy = dy*player.speed;
+  player.x = Math.max(player.w,Math.min(canvas.width-player.w,  player.x+player.vx));
+  player.y = Math.max(player.h,Math.min(canvas.height-player.h, player.y+player.vy));
+  player.angle = Math.atan2(mouseY-player.y, mouseX-player.x) + Math.PI/2;
+  if(player.invincible>0) player.invincible--;
+  if(shieldTimer>0) shieldTimer--;
+  else shield=false;
+  if(rapidFire>0) rapidFire--;
+
+  // Auto-fire
+  const cd = rapidFire>0 ? 6 : SHOOT_COOLDOWN_BASE - Math.min(GS.level,12);
+  if(shootCooldown>0) shootCooldown--;
+  if(GS.autoFire && shootCooldown<=0){ playerShoot(); shootCooldown=cd; }
+
+  // ── Bullets ──
+  bullets = bullets.filter(b=>{
+    b.x+=b.vx; b.y+=b.vy;
+    return b.x>-10&&b.x<canvas.width+10&&b.y>-10&&b.y<canvas.height+10;
+  });
+
+  // ── Enemy bullets ──
+  enemyBullets = enemyBullets.filter(b=>{
+    b.x+=b.vx; b.y+=b.vy;
+    return b.x>-10&&b.x<canvas.width+10&&b.y>-10&&b.y<canvas.height+10;
+  });
+
+  // ── Enemies ──
+  enemies.forEach(e=>{
+    e.wobble+=0.04;
+    e.y += e.speed;
+    e.x += e.vx + Math.sin(e.wobble)*0.5;
+    e.x = Math.max(e.w,Math.min(canvas.width-e.w,e.x));
+    e.shootTimer++;
+    if(e.shootTimer > 80 && Math.random()<e.shootRate){
+      const ang=Math.atan2(player.y-e.y, player.x-e.x);
+      enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(ang)*e.bulletSpd,vy:Math.sin(ang)*e.bulletSpd,r:4,color:'#ff3366'});
+      e.shootTimer=0;
+    }
+    // Fell off screen
+    if(e.y>canvas.height+80) e.hp=0;
+  });
+
+  // ── Powerups ──
+  powerups.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life--;});
+  powerups=powerups.filter(p=>p.life>0&&p.y<canvas.height+40);
+
+  // ── Particles ──
+  particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vx*=.96;p.vy*=.96;p.life--;});
+  particles=particles.filter(p=>p.life>0);
+
+  // ── COLLISIONS ──
+  // Player bullets → enemies
+  for(let bi=bullets.length-1;bi>=0;bi--){
+    const b=bullets[bi]; let hit=false;
+    for(let ei=enemies.length-1;ei>=0;ei--){
+      const e=enemies[ei];
+      const d=Math.hypot(b.x-e.x,b.y-e.y);
+      if(d < b.r+e.w){
+        e.hp--; explode(b.x,b.y,e.glowColor,6);
+        if(e.hp<=0){
+          explode(e.x,e.y,e.glowColor,e.boss?30:14);
+          GS.score += e.boss ? 500*GS.level : 10*GS.level;
+          GS.kills++;
+          spawnPowerup(e.x,e.y);
+          enemies.splice(ei,1);
+        }
+        bullets.splice(bi,1); hit=true; break;
+      }
+    }
+  }
+
+  // Enemy bullets → player
+  if(player.invincible<=0){
+    for(let bi=enemyBullets.length-1;bi>=0;bi--){
+      const b=enemyBullets[bi];
+      const d=Math.hypot(b.x-player.x,b.y-player.y);
+      if(d<b.r+player.w*.7){
+        if(shield){explode(b.x,b.y,'#00ffff',5);enemyBullets.splice(bi,1);continue;}
+        GS.health-=8; explode(b.x,b.y,'#ff3366',5);
+        enemyBullets.splice(bi,1);
+        player.invincible=40;
+        if(GS.health<=0) loseLife();
+      }
+    }
+    // Enemies → player
+    for(let ei=enemies.length-1;ei>=0;ei--){
+      const e=enemies[ei];
+      const d=Math.hypot(e.x-player.x,e.y-player.y);
+      if(d<e.w+player.w*.8){
+        GS.health-=e.boss?25:15; explode(e.x,e.y,e.glowColor,12);
+        enemies.splice(ei,1);
+        player.invincible=60;
+        if(GS.health<=0) loseLife();
+      }
+    }
+  }
+
+  // Player → powerups
+  for(let pi=powerups.length-1;pi>=0;pi--){
+    const p=powerups[pi];
+    const d=Math.hypot(p.x-player.x,p.y-player.y);
+    if(d<p.r+player.w*.9){
+      applyPowerup(p.type); explode(p.x,p.y,'#ffff00',10);
+      powerups.splice(pi,1);
+    }
+  }
+
+  // ── Check wave complete ──
+  if(enemies.length===0 && GS.running && !GS.paused){
+    nextLevel();
+  }
+
+  updateHUD();
+}
+
+function applyPowerup(type){
+  if(type==='health'){ GS.health=Math.min(GS.maxHealth,GS.health+30); showMsg('❤️ +HEALTH!');}
+  if(type==='shield'){ shield=true; shieldTimer=300; showMsg('🛡️ SHIELD!'); }
+  if(type==='rapid'){  rapidFire=200; showMsg('⚡ RAPID FIRE!'); }
+  if(type==='bomb'){
+    enemies.forEach(e=>{explode(e.x,e.y,e.glowColor,12);GS.score+=5*GS.level;GS.kills++;});
+    enemies.length=0; showMsg('💣 BOMB!');
+  }
+}
+
+let msgTimer=0, msgText='';
+function showMsg(txt){ msgText=txt; msgTimer=90; }
+
+function loseLife(){
+  GS.lives--;
+  GS.health=GS.maxHealth;
+  player.invincible=120;
+  if(GS.lives<=0) gameOver();
+}
+
+// ══════════════════════════════════════════════
+//  DRAW
+// ══════════════════════════════════════════════
+// Starfield
+const starsBg=[];
+for(let i=0;i<120;i++) starsBg.push({x:Math.random()*3000,y:Math.random()*3000,r:.5+Math.random()*1.5,spd:.1+Math.random()*.4});
+
+function drawBackground(){
+  ctx.fillStyle='rgba(6,0,26,.25)';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  starsBg.forEach(s=>{
+    s.y+=s.spd;
+    if(s.y>canvas.height+2){s.y=-2;s.x=Math.random()*canvas.width;}
+    ctx.globalAlpha=.4+Math.random()*.3;
+    ctx.fillStyle='#fff';
+    ctx.beginPath();ctx.arc(s.x%canvas.width,s.y,s.r,0,Math.PI*2);ctx.fill();
+    ctx.globalAlpha=1;
+  });
+}
+
+function draw(){
+  drawBackground();
+  enemies.forEach(e=>drawEnemy(e));
+  bullets.forEach(b=>drawBullet(b,false));
+  enemyBullets.forEach(b=>drawBullet(b,true));
+  powerups.forEach(p=>drawPowerup(p));
+  particles.forEach(p=>drawParticle(p));
+
+  // Player (flicker if invincible)
+  if(player.invincible<=0 || Math.floor(player.invincible/4)%2===0){
+    drawShip(player.x,player.y,player.angle,player.w,player.color,'#ff00ff');
+    // Shield ring
+    if(shield){
+      ctx.save();
+      ctx.globalAlpha=.35+Math.sin(Date.now()*.01)*.15;
+      ctx.strokeStyle='#00ffff'; ctx.lineWidth=3;
+      ctx.shadowBlur=20; ctx.shadowColor='#00ffff';
+      ctx.beginPath(); ctx.arc(player.x,player.y,player.w*1.4,0,Math.PI*2); ctx.stroke();
+      ctx.restore();
+    }
+  }
+
+  // Powerup message
+  if(msgTimer>0){
+    msgTimer--;
+    ctx.save();
+    ctx.globalAlpha=Math.min(1,msgTimer/20);
+    ctx.font=`bold ${clamp(20,4,36)}px Orbitron,monospace`;
+    ctx.fillStyle='#ffff00'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.shadowBlur=20; ctx.shadowColor='#ffaa00';
+    ctx.fillText(msgText, canvas.width/2, canvas.height/2-60);
+    ctx.restore();
+  }
+}
+
+function clamp(base,vw,max){return Math.min(max,Math.max(base,window.innerWidth*vw/100));}
+
+// ══════════════════════════════════════════════
+//  HUD
+// ══════════════════════════════════════════════
+function updateHUD(){
+  document.getElementById('hudScore').textContent=GS.score.toLocaleString();
+  document.getElementById('hudLevel').textContent=`LEVEL ${GS.level} / 100`;
+  document.getElementById('hudEnemies').textContent=enemies.length;
+  const hp=Math.max(0,(GS.health/GS.maxHealth)*100);
+  document.getElementById('healthFill').style.width=hp+'%';
+  document.getElementById('healthFill').style.background=
+    hp>60?'linear-gradient(90deg,#00ff88,#00ffff)':
+    hp>30?'linear-gradient(90deg,#ffaa00,#ffff00)':
+          'linear-gradient(90deg,#ff3366,#ff8800)';
+  document.getElementById('hudLives').textContent='❤️'.repeat(Math.max(0,GS.lives));
+}
+
+// ══════════════════════════════════════════════
+//  LEVEL TRANSITIONS
+// ══════════════════════════════════════════════
+function nextLevel(){
+  if(GS.level>=100){ winGame(); return; }
+  GS.level++;
+  // Heal a bit each level
+  GS.health=Math.min(GS.maxHealth, GS.health+20);
+  showWaveBanner();
+  setTimeout(()=>{ if(GS.running) spawnWave(); }, 2000);
+}
+
+function showWaveBanner(){
+  const b=document.getElementById('waveBanner');
+  const labels=['','EASY','EASY','EASY','EASY','OK!',
+    'GOOD!','GREAT!','AWESOME!','AMAZING!','⚡ BOSS TIME!'];
+  const label = GS.level%10===0 ? '👾 BOSS LEVEL!' :
+                GS.level<=5 ? 'NICE!' :
+                GS.level<=20 ? 'GREAT!' :
+                GS.level<=50 ? 'AWESOME!' : '🔥 INTENSE!';
+  b.textContent = `LEVEL ${GS.level}   ${label}`;
+  b.style.display='block';
+  b.style.animation='none';
+  setTimeout(()=>{ b.style.animation='wavePop 2.2s ease forwards'; },10);
+  setTimeout(()=>{ b.style.display='none'; },2300);
+}
+
+// ══════════════════════════════════════════════
+//  GAME LOOP
+// ══════════════════════════════════════════════
+let rafId=null;
+function loop(){
+  if(!GS.running||GS.paused){ rafId=null; return; }
+  update();
+  draw();
+  rafId=requestAnimationFrame(loop);
+}
+
+// ══════════════════════════════════════════════
+//  START / STOP / OVER / WIN
+// ══════════════════════════════════════════════
+function startGame(){
+  GS.running=true; GS.paused=false;
+  GS.level=1; GS.score=0; GS.kills=0; GS.lives=3; GS.health=100;
+  GS.startTime=Date.now();
+  player.x=canvas.width/2; player.y=canvas.height-100;
+  player.invincible=0;
+  bullets.length=0; enemyBullets.length=0; enemies.length=0;
+  particles.length=0; powerups.length=0;
+  shield=false; rapidFire=0;
+  showGame();
+  document.getElementById('pauseMenu').classList.remove('active');
+  showWaveBanner();
+  setTimeout(spawnWave,1800);
+  if(rafId) cancelAnimationFrame(rafId);
+  rafId=requestAnimationFrame(loop);
+}
+
+function stopGame(){
+  GS.running=false;
+  if(rafId){cancelAnimationFrame(rafId);rafId=null;}
+  document.getElementById('gameWrap').classList.remove('active');
+}
+
+function gameOver(){
+  GS.running=false;
+  if(rafId){cancelAnimationFrame(rafId);rafId=null;}
+  const elapsed=Math.round((Date.now()-GS.startTime)/1000);
+  document.getElementById('finalScore').textContent=GS.score.toLocaleString();
+  document.getElementById('goLevel').textContent=GS.level;
+  document.getElementById('goKills').textContent=GS.kills;
+  document.getElementById('goTime').textContent=elapsed+'s';
+  document.getElementById('gameWrap').classList.remove('active');
+  show('gameOverScreen');
+}
+
+function winGame(){
+  GS.running=false;
+  if(rafId){cancelAnimationFrame(rafId);rafId=null;}
+  document.getElementById('winScore').textContent=GS.score.toLocaleString();
+  document.getElementById('gameWrap').classList.remove('active');
+  makeConfetti();
+  show('winScreen');
+}
+
+function makeConfetti(){
+  const c=document.getElementById('winConfetti');
+  c.innerHTML='';
+  const colors=['#00ffff','#ff00ff','#ffff00','#00ff88','#ff3366'];
+  for(let i=0;i<40;i++){
+    const d=document.createElement('div');
+    d.className='confetti';
+    d.style.cssText=`left:${Math.random()*100}%;top:-10px;background:${colors[Math.floor(Math.random()*colors.length)]};width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;animation-duration:${2+Math.random()*3}s;animation-delay:${Math.random()*2}s;`;
+    c.appendChild(d);
+  }
+}
+
+function setPause(p){
+  GS.paused=p;
+  const pm=document.getElementById('pauseMenu');
+  if(p){ pm.classList.add('active'); if(rafId){cancelAnimationFrame(rafId);rafId=null;} }
+  else { pm.classList.remove('active'); if(GS.running){rafId=requestAnimationFrame(loop);} }
+}
+
+// ══════════════════════════════════════════════
+//  KEYBOARD INPUT
+// ══════════════════════════════════════════════
+document.addEventListener('keydown',e=>{
+  keys[e.key.toLowerCase()]=true;
+  if(e.key===' '){
+    e.preventDefault();
+    if(GS.running&&!GS.paused&&shootCooldown<=0){ playerShoot(); shootCooldown=SHOOT_COOLDOWN_BASE-Math.min(GS.level,12); }
+  }
+  if(e.key==='Escape') if(GS.running) setPause(!GS.paused);
+});
+document.addEventListener('keyup',e=>{ keys[e.key.toLowerCase()]=false; });
+
+// ── MOUSE ──
+canvas.addEventListener('mousemove',e=>{
+  const r=canvas.getBoundingClientRect();
+  mouseX=(e.clientX-r.left)*(canvas.width/r.width);
+  mouseY=(e.clientY-r.top)*(canvas.height/r.height);
+});
+canvas.addEventListener('click',e=>{
+  if(GS.running&&!GS.paused&&shootCooldown<=0){ playerShoot(); shootCooldown=SHOOT_COOLDOWN_BASE-Math.min(GS.level,12); }
+});
+
+// ── TOUCH (drag to aim, fire btn) ──
+canvas.addEventListener('touchstart',e=>{
+  e.preventDefault();
+  const t=e.touches[0];
+  const r=canvas.getBoundingClientRect();
+  mouseX=(t.clientX-r.left)*(canvas.width/r.width);
+  mouseY=(t.clientY-r.top)*(canvas.height/r.height);
+},{passive:false});
+canvas.addEventListener('touchmove',e=>{
+  e.preventDefault();
+  const t=e.touches[0];
+  const r=canvas.getBoundingClientRect();
+  mouseX=(t.clientX-r.left)*(canvas.width/r.width);
+  mouseY=(t.clientY-r.top)*(canvas.height/r.height);
+},{passive:false});
+
+// ── D-PAD TOUCH ──
+function dpadButton(id, dir){
+  const el=document.getElementById(id);
+  el.addEventListener('touchstart',e=>{e.preventDefault();dpadState[dir]=true;el.classList.add('pressed');},{passive:false});
+  el.addEventListener('touchend',e=>{e.preventDefault();dpadState[dir]=false;el.classList.remove('pressed');},{passive:false});
+}
+dpadButton('dUp','up'); dpadButton('dDown','down');
+dpadButton('dLeft','left'); dpadButton('dRight','right');
+
+// Fire btn
+const fireBtn=document.getElementById('fireBtn');
+fireBtn.addEventListener('touchstart',e=>{
+  e.preventDefault();fireBtn.classList.add('pressed');
+  if(GS.running&&!GS.paused&&shootCooldown<=0){
+    playerShoot();shootCooldown=SHOOT_COOLDOWN_BASE-Math.min(GS.level,12);
+  }
+},{passive:false});
+fireBtn.addEventListener('touchend',e=>{e.preventDefault();fireBtn.classList.remove('pressed');},{passive:false});
+
+// Auto-fire toggle
+let autoInt=null;
+document.getElementById('autoBtn').addEventListener('click',()=>{
+  GS.autoFire=!GS.autoFire;
+  document.getElementById('autoLabel').textContent=GS.autoFire?'ON':'OFF';
+  document.getElementById('autoBtn').style.borderColor=GS.autoFire?'#00ff88':'var(--cyan)';
+  document.getElementById('autoBtn').style.color=GS.autoFire?'#00ff88':'var(--cyan)';
+});
+
+// Pause btn
+document.getElementById('pauseBtn').addEventListener('click',()=>{if(GS.running)setPause(!GS.paused);});
+document.getElementById('resumeBtn').addEventListener('click',()=>setPause(false));
+document.getElementById('quitBtn').addEventListener('click',()=>{setPause(false);stopGame();show('startScreen');});
+document.getElementById('retryBtn').addEventListener('click',()=>startGame());
+
+// Start / how-to
+document.getElementById('startBtn').addEventListener('click',()=>startGame());
+document.getElementById('howBtn').addEventListener('click',()=>show('howScreen'));
+document.getElementById('howStartBtn').addEventListener('click',()=>startGame());
+</script>
 </body>
 </html>
