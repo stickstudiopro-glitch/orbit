@@ -324,19 +324,12 @@
   }
 
   /* ---------- Ad slot ---------- */
-  .ad-slot{
+  #dynamic-ad-slot{
+    display:flex; 
+    justify-content:center; 
     max-width:1160px;
     margin:10px auto 0;
     padding:0 24px;
-  }
-  .ad-slot .box{
-    border:1px dashed var(--hairline);
-    border-radius:6px;
-    padding:22px;
-    text-align:center;
-    color:var(--text-muted);
-    font-family:'JetBrains Mono',monospace;
-    font-size:11.5px;
   }
 
   footer{
@@ -438,58 +431,50 @@
   </div>
 </main>
 
-<div class="ad-slot" style="display:flex; justify-content:center;">
-  <!-- Desktop banner -->
-  <iframe class="ad-desktop"
-    sandbox="allow-scripts"
-    style="border:0; width:728px; height:90px;"
-    srcdoc='<body style="margin:0"><script>atOptions={key:"3f3a72de866bf5f9a0626304f6e70510",format:"iframe",height:90,width:728,params:{}}</script><script src="https://www.highperformanceformat.com/3f3a72de866bf5f9a0626304f6e70510/invoke.js"></script></body>'>
-  </iframe>
+<!-- Dynamic Ad Slot -->
+<div id="dynamic-ad-slot"></div>
+<script>
+  (function() {
+    var isDesktop = window.innerWidth > 760;
+    
+    // Choose correct Adsterra key and dimensions based on screen size
+    var adKey = isDesktop ? '3f3a72de866bf5f9a0626304f6e70510' : '538b51d485f759e139431e0c5c26d204';
+    var width = isDesktop ? 728 : 320;
+    var height = isDesktop ? 90 : 50;
 
-  <!-- Mobile banner -->
-  <iframe class="ad-mobile"
-    sandbox="allow-scripts"
-    style="border:0; width:320px; height:50px; display:none;"
-    srcdoc='<body style="margin:0"><script>atOptions={key:"538b51d485f759e139431e0c5c26d204",format:"iframe",height:50,width:320,params:{}}</script><script src="https://www.highperformanceformat.com/538b51d485f759e139431e0c5c26d204/invoke.js"></script></body>'>
-  </iframe>
-</div>
-
-<style>
-  @media (max-width: 760px){
-    .ad-desktop{ display:none !important; }
-    .ad-mobile{ display:block !important; }
-  }
-</style>
+    var iframe = document.createElement('iframe');
+    
+    // STRICT SANDBOX: This prevents the ad from redirecting the parent page. 
+    // It allows scripts to run, and allows popups (new tabs) when clicked.
+    iframe.sandbox = "allow-scripts allow-popups allow-popups-to-escape-sandbox allow-same-origin";
+    iframe.style.border = "0";
+    iframe.style.width = width + "px";
+    iframe.style.height = height + "px";
+    iframe.scrolling = "no";
+    
+    // Inject the Adsterra script into the secure iframe
+    iframe.srcdoc = '<body style="margin:0;padding:0;overflow:hidden;display:flex;justify-content:center;align-items:center;">' +
+                    '<script>atOptions={key:"' + adKey + '",format:"iframe",height:' + height + ',width:' + width + ',params:{}}<\/script>' +
+                    '<script src="https://www.highperformanceformat.com/' + adKey + '/invoke.js"><\/script>' +
+                    '</body>';
+                 
+    document.getElementById('dynamic-ad-slot').appendChild(iframe);
+  })();
+</script>
 
 <footer>
   <div>© <span id="year"></span> Orbit Feed. Headlines link out to their original publishers.</div>
   <div id="lastUpdated">last sync: —</div>
 </footer>
 
-<!-- =====================================================================
-  ADSENSE ACTIVATION (do this once your AdSense account is approved):
-  1. Paste your AdSense auto-ads snippet from your AdSense dashboard
-     just before </head>, e.g.:
-       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
-       crossorigin="anonymous"></script>
-  2. Replace the "AD SLOT" box above with your actual <ins class="adsbygoogle">
-     unit code from AdSense, and call (adsbygoogle = window.adsbygoogle || []).push({});
-  3. AdSense requires real, substantial content and a working Privacy Policy
-     page before it will approve a site — add one before applying.
-===================================================================== -->
-
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
   /* ---------------- CONFIG ---------------- */
-  const MAX_ITEMS = 60;                    // rolling buffer size — oldest dropped past this
-  const REFRESH_MS = 10 * 60 * 1000;       // auto refresh every 10 minutes
+  const MAX_ITEMS = 60;                    
+  const REFRESH_MS = 10 * 60 * 1000;       
   const STORAGE_KEY = 'orbitfeed_cache_v1';
-
-  // Free RSS -> JSON bridge (rss2json.com). Works keyless but rate-limited
-  // hard — get a free key at https://rss2json.com/register and paste it
-  // below to get 10,000 requests/day instead of a shared, easily-exhausted pool.
-  const RSS2JSON_API_KEY = ''; // <-- paste your free key here, e.g. 'abc123...'
+  const RSS2JSON_API_KEY = ''; 
 
   const FEEDS = [
     { name: 'IGN',        category: 'gaming', url: 'https://www.ign.com/rss/articles/feed' },
@@ -565,7 +550,6 @@
       return;
     }
 
-    // merge with existing buffer, dedupe by link
     const merged = [...fresh, ...items];
     const seen = new Set();
     let deduped = merged.filter(a => {
@@ -574,10 +558,7 @@
       return true;
     });
 
-    // newest first
     deduped.sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate));
-
-    // rolling buffer: keep only MAX_ITEMS, oldest fall off
     items = deduped.slice(0, MAX_ITEMS);
     saveCache(items);
 
@@ -598,8 +579,7 @@
   /* ---------------- RENDER ---------------- */
   function renderGauge(){
     const pct = Math.min(items.length / MAX_ITEMS, 1);
-    const circumference = 603; // 2*pi*96
-    const offset = circumference * (1 - pct);
+    const offset = 603 * (1 - pct);
     document.getElementById('gaugeArc').style.strokeDashoffset = offset;
     document.getElementById('gaugeCount').textContent = items.length;
     document.getElementById('gaugeMax').textContent = '/ ' + MAX_ITEMS + ' slots';
