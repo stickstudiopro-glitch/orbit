@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+ <!-- SEO Meta Tags -->
+<meta name="description" content="Orbit Feed: The live, auto-updating gaming and PC tech news signal. Fast, ad-free, and always current.">
+<meta name="keywords" content="gaming news, PC tech news, live feeds, Orbit Shooter Gaming, RSS aggregator">
+<meta name="author" content="Orbit Feed">
+
+<!-- Open Graph / Social Media Tags -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://orbitshootergaming.online/">
+<meta property="og:title" content="Orbit Feed — Gaming & Tech Signal">
+<meta property="og:description" content="Auto-updating gaming and PC/tech news feed. No manual posting.">
+<meta property="og:image" content="https://orbitshootergaming.online/favicon.svg">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
  <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-N8YM5Z78Q0"></script>
 <script>
@@ -665,6 +679,20 @@
   refreshAll();
   setInterval(refreshAll, REFRESH_MS);
 </script>
-
+ 
+ <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => {
+          console.log('ServiceWorker registered successfully with scope: ', registration.scope);
+        })
+        .catch(err => {
+          console.error('ServiceWorker registration failed: ', err);
+        });
+    });
+  }
+</script>
+ 
 </body>
 </html>
