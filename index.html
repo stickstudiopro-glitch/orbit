@@ -1,381 +1,646 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name='impact-site-verification' value='af1bb001-d782-45b0-81ef-3e0873451131'>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-552QV3N4X9"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-552QV3N4X9');
-</script>
-
-<meta name="google-site-verification" content="pLhOmw9JhUwsoGozXxiM01YWg_gSEDjGlF-fAX95rE4" />
-<title>Stick Studio Pro | Professional Online Stick Figure Animation Maker</title>
-
-<meta name="description" content="The ultimate free online stickman animation maker. A powerful web-based alternative to Pivot and Stick Nodes with pro keyframing and 1080p video export.">
-<meta name="keywords" content="stick figure animation, stick nodes online, pivot animator, stickman maker, 2D animation, free animator, stickman fight, browser animation software">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-<link rel="canonical" href="https://stickstudiopro.com/" />
-
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://stickstudiopro.com/">
-<meta property="og:title" content="Stick Studio Pro – Free 1080p Stick Figure Animation Online">
-<meta property="og:description" content="Professional browser-based stick figure animator. No download needed. 1080p export, 60FPS preview, multi-actor support. Free forever.">
-<meta property="og:image" content="https://stickstudiopro.com/stick-studio-logo.png">
-<meta property="og:site_name" content="Stick Studio Pro">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Stick Studio Pro – Free 1080p Stick Figure Animation Online">
-<meta name="twitter:description" content="Professional browser-based stick figure animator. No download needed. 1080p export, 60FPS preview, multi-actor support. Free forever.">
-<meta name="twitter:image" content="https://stickstudiopro.com/stick-studio-logo.png">
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Stick Studio Pro",
-  "url": "https://stickstudiopro.com",
-  "description": "Free professional browser-based stick figure animation tool with 1080p export, multi-actor support, and onion skinning.",
-  "applicationCategory": "MultimediaApplication",
-  "operatingSystem": "Any",
-  "browserRequirements": "Requires a modern browser with JavaScript enabled",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Stick Studio Pro",
-    "url": "https://stickstudiopro.com"
-  },
-  "featureList": [
-    "1080p HD video export",
-    "Multi-actor support up to 20 characters",
-    "Onion skinning",
-    "GIF export",
-    "Project library with local storage",
-    "60FPS real-time preview",
-    "No download required"
-  ]
-}
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Is Stick Studio Pro free?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes, Stick Studio Pro is 100% free. All features including 1080p export, multi-actor support, and GIF export are available at no cost."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Is Stick Studio Pro an alternative to Pivot Animator?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Stick Studio Pro is a professional browser-based alternative to Pivot Animator and Stick Nodes. It runs on any device without installation and exports in 1080p HD."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do I need to download anything to use Stick Studio Pro?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No download required. Stick Studio Pro runs entirely in your browser on any device including Chromebooks, tablets, and mobile phones."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What formats can I export my animation in?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "You can export your stick figure animations as 1080p MP4 or WebM video files, or as animated GIFs. All exports are free."
-      }
-    }
-  ]
-}
-</script>
-
-<link rel="icon" type="image/png" href="/stick-studio-logo.png">
-<link rel="apple-touch-icon" href="/stick-studio-logo.png">
-
-<!-- CLERK AUTH - OFFICIAL CDN -->
-<script
-  async
-  crossorigin="anonymous"
-  data-clerk-publishable-key="pk_live_Y2xlcmsuc3RpY2tzdHVkaW9wcm8uY29tJA"
-  src="https://cdn.clerk.com/clerk.js"
-  type="text/javascript">
-</script>
-
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orbit Feed — Gaming & Tech Signal</title>
+<meta name="description" content="Auto-updating gaming and PC/tech news feed. No manual posting — new signal in, old signal out.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-    :root { --accent: #2563eb; --glass: rgba(10, 10, 10, 0.8); }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020202; color: white; overflow-x: hidden; }
-    h1, h2, h3, .font-tech { font-family: 'Orbitron', sans-serif; }
-    button, .sub-tab, .frame-thumb, input, select { touch-action: manipulation; }
-    .loading-overlay { display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.95); z-index: 50; flex-direction: column; align-items: center; justify-content: center; }
-    .loader { width: 40px; height: 40px; border: 4px solid #2563eb; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .library-item { transition: all 0.3s ease; border-left: 4px solid transparent; }
-    .library-item:hover { border-left-color: #2563eb; background: rgba(37, 99, 235, 0.05); }
-    .library-item.editing { background: rgba(245, 158, 11, 0.1); border-left-color: #f59e0b; }
-    .delete-btn { opacity: 0.7; transition: all 0.2s; }
-    .delete-btn:hover { opacity: 1; color: #ef4444; transform: scale(1.1); }
-    .edit-input { background: rgba(0,0,0,0.5); border: 1px solid #f59e0b; color: white; padding: 4px 8px; border-radius: 6px; font-size: 12px; width: 100%; }
-    .social-icon { width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; border-radius: 10px; background: rgba(255,255,255,0.05); transition: all 0.3s; }
-    .social-icon:hover { background: rgba(37, 99, 235, 0.3); transform: translateY(-2px); }
-    .project-stat { font-size: 11px; padding: 2px 8px; border-radius: 12px; background: rgba(255,255,255,0.05); }
-    .page-content { display: none; }
-    .page-content.active { display: block; animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .glass-nav { background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .glass-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 1.5rem; backdrop-filter: blur(10px); }
-    .glass-input { background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); color: white; outline: none; transition: 0.3s; }
-    .glass-input:focus { border-color: #2563eb; box-shadow: 0 0 15px rgba(37, 99, 235, 0.2); }
-    .sub-tab { padding: 10px 24px; border-radius: 12px; font-size: 11px; font-weight: 800; cursor: pointer; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); color: #64748b; }
-    .sub-tab.active { background: #2563eb; color: white; border-color: #3b82f6; box-shadow: 0 0 20px rgba(37, 99, 235, 0.3); }
-    .canvas-wrapper { position: relative; background: #000; border-radius: 1.5rem; overflow: hidden; border: 1px solid #1e293b; aspect-ratio: 16/9; box-shadow: inset 0 0 50px rgba(0,0,0,0.5); }
-    canvas { width: 100%; height: 100%; touch-action: none; position: absolute; top: 0; left: 0; }
-    #onionCanvas { pointer-events: none; opacity: 0.6; mix-blend-mode: screen; }
-    .timeline-container { background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem; padding: 12px; display: flex; gap: 8px; overflow-x: auto; min-height: 90px; }
-    .frame-thumb { min-width: 60px; height: 50px; background: #0f172a; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: #475569; border: 2px solid transparent; cursor: pointer; transition: 0.2s; }
-    .frame-thumb.active { border-color: #2563eb; background: #1e3a8a; color: white; }
-    .frame-thumb:hover { background: #1e293b; }
-    .frame-delete-btn { position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; background: #ef4444; border: none; border-radius: 50%; color: white; font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; opacity: 0; pointer-events: none; z-index: 10; }
-    .frame-thumb-container:hover .frame-delete-btn { opacity: 1; pointer-events: auto; }
-    .frame-delete-btn:hover { background: #dc2626; transform: scale(1.1); }
-    .custom-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
-    .custom-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-    .custom-scroll::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    input[type="color"] { -webkit-appearance: none; -moz-appearance: none; appearance: none; border: none; cursor: pointer; padding: 0; }
-    input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
-    input[type="color"]::-webkit-color-swatch { border: 2px solid rgba(255,255,255,0.2); border-radius: 8px; }
-    .notification { position: fixed; top: 20px; right: 20px; padding: 12px 20px; border-radius: 10px; font-weight: bold; font-size: 14px; z-index: 1000; animation: slideIn 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-    .notification.success { background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.3); color: #4ade80; }
-    .notification.error { background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; }
-    .notification.info { background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; }
-    #tutorialModal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 9999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
-    .modal-dialog { background: rgba(15, 23, 42, 0.95); border: 2px solid #2563eb; border-radius: 16px; padding: 32px; max-width: 400px; width: 90%; box-shadow: 0 0 40px rgba(37, 99, 235, 0.3); }
-    .modal-dialog input { transition: all 0.3s; }
-    .modal-dialog input:focus { border-color: #3b82f6; box-shadow: 0 0 20px rgba(37, 99, 235, 0.2); }
-    .modal-dialog button { transition: all 0.2s; }
-    .modal-dialog button:hover { transform: translateY(-2px); }
-    .gif-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 1.5rem; width: 100%; max-width: 1000px; margin: 0 auto; }
-    @media (min-width: 768px) { .gif-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width: 1024px) { .gif-grid { grid-template-columns: repeat(4, 1fr); } }
-    .gif-card { position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: 1rem; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); background: rgba(15, 23, 42, 0.5); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: 0.3s; }
-    .gif-card:hover { border-color: #2563eb; transform: translateY(-5px); }
-    .gif-card canvas { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; touch-action: auto; pointer-events: none; }
-    .gif-card:hover canvas { opacity: 0.4; }
-    .gif-download-btn { position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%); background: #2563eb; color: white; padding: 8px 16px; border-radius: 20px; font-size: 11px; font-weight: 900; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 6px; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
-    .gif-card:hover .gif-download-btn { bottom: 15px; opacity: 1; }
-    .gif-download-btn:hover { background: #3b82f6; transform: translateX(-50%) scale(1.05); }
-    .gif-title { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: bold; color: #94a3b8; pointer-events: none; z-index: 10; }
-</style>
+  :root{
+    --bg:#0A0E14;
+    --bg-panel:#10161F;
+    --bg-panel-hover:#141C27;
+    --hairline:#212A38;
+    --text-primary:#E9EDF3;
+    --text-muted:#7C8798;
+    --signal:#6FFFB0;
+    --signal-dim:#2E5C46;
+    --live:#FF5D5D;
+    --tech:#6FB8FF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text-primary);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  a{color:inherit; text-decoration:none;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .display{font-family:'Space Grotesk',sans-serif;}
 
-<style>
-/* Force Clerk modal into our centered card */
-#clerkMount { display:block; }
-#clerkMount > div { position:static !important; transform:none !important; }
-.cl-modalBackdrop { display:none !important; }
-.cl-modal { position:static !important; transform:none !important; box-shadow:none !important; border-radius:16px !important; }
-.cl-card { border-radius:16px !important; }
+  /* ---------- Ticker ---------- */
+  .ticker-wrap{
+    background:var(--bg-panel);
+    border-bottom:1px solid var(--hairline);
+    overflow:hidden;
+    white-space:nowrap;
+    padding:9px 0;
+  }
+  .ticker-track{
+    display:inline-flex;
+    gap:48px;
+    animation:scroll-left 45s linear infinite;
+    padding-left:100%;
+  }
+  .ticker-wrap:hover .ticker-track{animation-play-state:paused;}
+  @keyframes scroll-left{
+    from{transform:translateX(0);}
+    to{transform:translateX(-100%);}
+  }
+  .ticker-item{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color:var(--text-muted);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .ticker-item .dot{width:5px;height:5px;border-radius:50%;background:var(--signal);flex:none;}
+  .ticker-item span.headline{color:var(--text-primary);}
+
+  /* ---------- Header / Hero ---------- */
+  header{
+    max-width:1160px;
+    margin:0 auto;
+    padding:28px 24px 0;
+  }
+  .navbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-bottom:36px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .brand-mark{
+    width:34px;height:34px;
+    border:1.5px solid var(--signal);
+    border-radius:50%;
+    position:relative;
+    flex:none;
+  }
+  .brand-mark::before{
+    content:"";
+    position:absolute; inset:9px;
+    border-radius:50%;
+    background:var(--signal);
+    box-shadow:0 0 12px 2px var(--signal);
+  }
+  .brand-mark::after{
+    content:"";
+    position:absolute; inset:-4px;
+    border:1px dashed var(--signal-dim);
+    border-radius:50%;
+    animation:spin 12s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .brand-name{font-size:15px; letter-spacing:0.06em;}
+  .brand-name b{font-family:'Space Grotesk',sans-serif;}
+  .navlinks{
+    display:flex;
+    gap:26px;
+    font-size:13px;
+    color:var(--text-muted);
+  }
+  .navlinks a:hover{color:var(--text-primary);}
+
+  .hero{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:40px;
+    align-items:center;
+    padding:20px 0 56px;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:0.14em;
+    color:var(--signal);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:18px;
+  }
+  .eyebrow .pulse{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--signal);
+    box-shadow:0 0 8px 2px var(--signal);
+    animation:pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.25;}}
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(34px,5vw,54px);
+    line-height:1.04;
+    letter-spacing:-0.01em;
+  }
+  h1 em{
+    font-style:normal;
+    color:var(--signal);
+  }
+  .hero p.sub{
+    margin-top:18px;
+    color:var(--text-muted);
+    font-size:15.5px;
+    max-width:46ch;
+  }
+  .hero-cta{
+    margin-top:26px;
+    display:flex;
+    gap:14px;
+    align-items:center;
+  }
+  .btn{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:0.05em;
+    padding:11px 18px;
+    border-radius:3px;
+    border:1px solid var(--signal);
+    color:var(--bg);
+    background:var(--signal);
+    cursor:pointer;
+    transition:opacity .15s;
+  }
+  .btn:hover{opacity:0.85;}
+  .btn.ghost{
+    background:transparent;
+    color:var(--text-primary);
+    border-color:var(--hairline);
+  }
+  .btn.ghost:hover{border-color:var(--text-muted);}
+  .btn:disabled{opacity:0.5; cursor:default;}
+
+  /* ---------- Buffer gauge (signature element) ---------- */
+  .gauge-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+  }
+  .gauge{position:relative; width:220px; height:220px;}
+  .gauge svg{transform:rotate(-90deg);}
+  .gauge-label{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+  }
+  .gauge-count{font-family:'Space Grotesk',sans-serif; font-size:38px; font-weight:700;}
+  .gauge-max{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-muted); margin-top:2px;}
+  .gauge-title{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--text-muted); margin-top:14px;}
+
+  /* ---------- Filters ---------- */
+  .controls{
+    max-width:1160px;
+    margin:0 auto;
+    padding:0 24px 22px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    align-items:center;
+    justify-content:space-between;
+    border-top:1px solid var(--hairline);
+    padding-top:24px;
+  }
+  .filters{display:flex; gap:8px; flex-wrap:wrap;}
+  .chip{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    padding:7px 13px;
+    border-radius:20px;
+    border:1px solid var(--hairline);
+    color:var(--text-muted);
+    cursor:pointer;
+    background:transparent;
+  }
+  .chip.active{
+    border-color:var(--signal);
+    color:var(--signal);
+  }
+  .searchbox{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    background:var(--bg-panel);
+    border:1px solid var(--hairline);
+    color:var(--text-primary);
+    padding:9px 12px;
+    border-radius:4px;
+    width:220px;
+  }
+  .searchbox:focus{outline:none; border-color:var(--signal);}
+  .status-line{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    color:var(--text-muted);
+  }
+
+  /* ---------- Feed grid ---------- */
+  main{max-width:1160px; margin:0 auto; padding:0 24px 80px;}
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin-top:20px;
+  }
+  .card{
+    background:var(--bg-panel);
+    border:1px solid var(--hairline);
+    border-radius:6px;
+    padding:18px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    transition:border-color .15s, transform .15s;
+  }
+  .card:hover{border-color:var(--signal-dim); transform:translateY(-2px);}
+  .card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:0.05em;
+  }
+  .source-tag{
+    padding:3px 8px;
+    border-radius:3px;
+    color:var(--bg);
+    font-weight:600;
+  }
+  .source-tag.gaming{background:var(--signal);}
+  .source-tag.tech{background:var(--tech);}
+  .card-time{color:var(--text-muted);}
+  .card-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:16.5px;
+    font-weight:700;
+    line-height:1.3;
+  }
+  .card:hover .card-title{color:var(--signal);}
+  .card-desc{
+    font-size:13px;
+    color:var(--text-muted);
+    line-height:1.5;
+    display:-webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  .card-foot{
+    margin-top:auto;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--signal);
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .empty, .loading-msg{
+    grid-column:1/-1;
+    text-align:center;
+    padding:60px 20px;
+    color:var(--text-muted);
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+  }
+
+  /* ---------- Ad slot ---------- */
+  .ad-slot{
+    max-width:1160px;
+    margin:10px auto 0;
+    padding:0 24px;
+  }
+  .ad-slot .box{
+    border:1px dashed var(--hairline);
+    border-radius:6px;
+    padding:22px;
+    text-align:center;
+    color:var(--text-muted);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+  }
+
+  footer{
+    border-top:1px solid var(--hairline);
+    margin-top:60px;
+    padding:26px 24px 40px;
+    max-width:1160px;
+    margin-left:auto; margin-right:auto;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    color:var(--text-muted);
+  }
+
+  @media (max-width:880px){
+    .hero{grid-template-columns:1fr; gap:20px;}
+    .gauge-wrap{order:-1;}
+    .gauge{width:160px;height:160px;}
+    .gauge-count{font-size:28px;}
+    .grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:560px){
+    .grid{grid-template-columns:1fr;}
+    .navlinks{display:none;}
+    .searchbox{width:100%;}
+    .controls{flex-direction:column; align-items:stretch;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track, .brand-mark::after, .eyebrow .pulse{animation:none !important;}
+  }
 </style>
 </head>
 <body>
-    <noscript>
-        <div style="padding: 20px; text-align: center; background: #1e293b; color: white;">
-            <h2>JavaScript Required</h2>
-            <p>This animation tool requires JavaScript to function. Please enable JavaScript in your browser settings.</p>
-        </div>
-    </noscript>
 
-    <div id="appWrapper" class="min-h-screen flex flex-col">
+<div class="ticker-wrap">
+  <div class="ticker-track" id="tickerTrack">
+    <span class="ticker-item mono"><span class="dot"></span>CONNECTING TO FEED…</span>
+  </div>
+</div>
 
-        <div id="projectNameModal" class="modal-overlay" style="display:none;">
-            <div class="modal-dialog">
-                <h2 class="text-2xl font-tech text-blue-400 mb-4">Create New Project</h2>
-                <p class="text-slate-300 mb-6">Name your animation project:</p>
-                <input type="text" id="projectNameInput" placeholder="Enter project name..." class="w-full bg-black border border-blue-500 rounded-xl p-3 text-white font-bold mb-6 focus:border-blue-400 outline-none">
-                <div class="flex gap-4">
-                    <button onclick="saveProjectFromModal()" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-xl font-bold uppercase">Create</button>
-                    <button onclick="closeProjectModal()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white px-6 py-3 rounded-xl font-bold uppercase">Cancel</button>
-                </div>
-            </div>
-        </div>
-
-        <nav class="fixed top-0 w-full z-50 glass-nav px-4 sm:px-6 py-4 flex justify-between items-center">
-           <div class="flex items-center gap-2 flex-shrink-0">
-                <img src="stick-studio-logo.png" alt="Stick Studio Pro" class="w-8 h-8 rounded-lg object-cover">
-                <h1 class="text-lg font-tech tracking-tighter hidden md:block">STICK<span class="text-blue-500 italic">STUDIO</span> PRO</h1>
-            </div>
-            <div class="flex items-center gap-3 sm:gap-5 text-[10px] sm:text-xs font-bold uppercase tracking-widest overflow-x-auto no-scrollbar whitespace-nowrap px-2">
-                <button onclick="nav('home')" class="hover:text-blue-400 transition">Home</button>
-                <button onclick="nav('editor')" class="text-blue-500 transition">Studio</button>
-                <a href="https://shop.stickstudiopro.com" target="_blank" class="hover:text-blue-400 transition">Shop</a>
-                <a href="https://assets.stickstudiopro.com" target="_blank" class="hover:text-blue-400 transition">Assets</a>
-                <button id="proNavBtn" onclick="handleProBtn()" style="display:none;background:linear-gradient(135deg,#b8860b,#ffd700);color:#000;padding:6px 14px;border-radius:8px;font-size:10px;font-weight:900;letter-spacing:.08em;border:none;cursor:pointer;">&#11088; PRO</button>
-                <div id="clerkSignedOut" style="display:none;">
-                  <button onclick="openSignIn()" style="padding:6px 14px;border-radius:8px;font-size:10px;font-weight:900;border:1px solid rgba(255,255,255,0.2);background:transparent;color:#94a3b8;cursor:pointer;">Sign In</button>
-                </div>
-                <div id="clerkSignedIn" style="display:none;align-items:center;gap:6px;">
-                  <div id="clerkUserBtn"></div>
-                </div>
-            </div>
-        </nav>
-
-        <!-- ═══════ HOME PAGE ═══════ -->
-        <section id="homePage" class="page-content active pt-32 pb-20 px-6 max-w-7xl mx-auto w-full">
-            <div class="grid lg:grid-cols-2 gap-12 items-center min-h-[70vh]">
-                <div class="order-2 lg:order-1 space-y-8 flex flex-col items-center text-center">
-                    <h1 class="text-5xl sm:text-8xl font-tech leading-none">ELITE <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-600 to-purple-600">ANIMATION</span> <br> STUDIO.</h1>
-                    <p class="text-slate-400 text-lg sm:text-xl max-w-xl leading-relaxed">
-                        Experience the next generation of <strong>stick figure animation</strong>. No downloads, no plugins—just pure creative power. Professional-grade keyframing and high-quality rendering in your browser.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button onclick="promptNewProject()" class="bg-blue-600 hover:bg-blue-500 text-white px-10 py-5 rounded-2xl font-black tracking-widest transition-all shadow-xl shadow-blue-600/20 text-center">
-                            LAUNCH STUDIO NOW
-                        </button>
-                        <a href="#ultimate-guide" class="bg-white/5 hover:bg-white/10 text-white px-10 py-5 rounded-2xl font-black tracking-widest transition-all border border-white/10 text-center">
-                            LEARN TO ANIMATE
-                        </a>
-                    </div>
-                </div>
-                <div class="order-1 lg:order-2">
-                    <div class="relative glass-card p-2 border-blue-500/30 group">
-                        <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-[1.6rem] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                        <div class="canvas-wrapper relative">
-                            <canvas id="heroCanvas" width="900" height="450"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PRO SHOWCASE SECTION -->
-            <div class="mt-24 w-full px-4" id="pro-showcase">
-              <div class="flex items-center gap-4 mb-4 justify-center">
-                <div class="h-px w-12" style="background:linear-gradient(90deg,transparent,#b8860b)"></div>
-                <span style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.2em;color:#b8860b;text-transform:uppercase;">What's New</span>
-                <div class="h-px w-12" style="background:linear-gradient(90deg,#b8860b,transparent)"></div>
-              </div>
-              <div class="text-center mb-12">
-                <h2 style="font-family:'Orbitron',sans-serif;font-size:clamp(22px,4vw,38px);font-weight:900;line-height:1.1;color:white;">
-                  Meet <span style="background:linear-gradient(90deg,#b8860b,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Stick Studio Pro</span>
-                </h2>
-                <p class="text-slate-400 mt-3 max-w-xl mx-auto text-sm leading-relaxed">The full professional studio experience — backgrounds, text layers, undo/redo, 1080p export and more. All in your browser.</p>
-              </div>
-
-              <!-- 3 looping videos -->
-              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:900px;margin:0 auto 20px;" class="pro-vid-grid">
-                <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(184,134,11,0.3);aspect-ratio:16/9;background:#000;position:relative;">
-                  <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"><source src="heat.webm" type="video/webm"></video>
-                  <div style="position:absolute;bottom:0;left:0;right:0;padding:10px 8px 5px;background:linear-gradient(transparent,rgba(0,0,0,0.85));font-size:9px;font-weight:800;color:#ffd700;text-align:center;letter-spacing:.1em;text-transform:uppercase;">Heat FX</div>
-                </div>
-                <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(184,134,11,0.3);aspect-ratio:16/9;background:#000;position:relative;">
-                  <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"><source src="move.webm" type="video/webm"></video>
-                  <div style="position:absolute;bottom:0;left:0;right:0;padding:10px 8px 5px;background:linear-gradient(transparent,rgba(0,0,0,0.85));font-size:9px;font-weight:800;color:#ffd700;text-align:center;letter-spacing:.1em;text-transform:uppercase;">Fluid Motion</div>
-                </div>
-                <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(184,134,11,0.3);aspect-ratio:16/9;background:#000;position:relative;">
-                  <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"><source src="Project_8428.webm" type="video/webm"></video>
-                  <div style="position:absolute;bottom:0;left:0;right:0;padding:10px 8px 5px;background:linear-gradient(transparent,rgba(0,0,0,0.85));font-size:9px;font-weight:800;color:#ffd700;text-align:center;letter-spacing:.1em;text-transform:uppercase;">Pro Scene</div>
-                </div>
-              </div>
-
-              <div style="text-align:center;">
-                <button onclick="nav('editor')" class="bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-700 hover:to-yellow-600 text-black px-8 py-4 rounded-xl font-black uppercase tracking-wider transition-all">
-                  Try Pro Features Now
-                </button>
-              </div>
-            </div>
-        </section>
-
-        <!-- ═══════ EDITOR PAGE ═══════ -->
-        <section id="editorPage" class="page-content w-full h-screen flex flex-col">
-            <!-- Editor content here -->
-        </section>
-
+<header>
+  <div class="navbar">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div class="brand-name">ORBIT <b>FEED</b></div>
     </div>
+    <nav class="navlinks">
+      <a href="#feed">Feed</a>
+      <a href="#" id="refreshLink">Force refresh</a>
+      <a href="https://orbitshootergaming.online/" target="_blank" rel="noopener">Main site ↗</a>
+    </nav>
+  </div>
 
-    <script>
-        // Wait for Clerk to load
-        window.addEventListener('load', function() {
-            if (window.Clerk) {
-                Clerk.load().then(() => {
-                    updateClerkUI();
-                    Clerk.onLoaded(() => updateClerkUI());
-                }).catch(err => console.error('Clerk load error:', err));
-            }
-        });
+  <div class="hero">
+    <div>
+      <div class="eyebrow"><span class="pulse"></span>LIVE SIGNAL — NO MANUAL POSTING</div>
+      <h1>Gaming &amp; PC news<br><em>that updates itself.</em></h1>
+      <p class="sub">Orbit Feed pulls fresh gaming and tech headlines straight from public news wires every time someone visits. Nothing is written by hand — when the buffer fills up, the oldest story is dropped to make room for the newest.</p>
+      <div class="hero-cta">
+        <button class="btn" id="heroRefresh">PULL LATEST SIGNAL</button>
+        <button class="btn ghost" id="clearBuffer">CLEAR BUFFER</button>
+      </div>
+    </div>
+    <div class="gauge-wrap">
+      <div class="gauge">
+        <svg width="220" height="220" viewBox="0 0 220 220">
+          <circle cx="110" cy="110" r="96" fill="none" stroke="#212A38" stroke-width="10"/>
+          <circle id="gaugeArc" cx="110" cy="110" r="96" fill="none" stroke="#6FFFB0" stroke-width="10"
+                  stroke-linecap="round" stroke-dasharray="603" stroke-dashoffset="603"
+                  style="transition:stroke-dashoffset 0.6s ease;"/>
+        </svg>
+        <div class="gauge-label">
+          <div class="gauge-count" id="gaugeCount">0</div>
+          <div class="gauge-max" id="gaugeMax">/ 60 slots</div>
+        </div>
+      </div>
+      <div class="gauge-title">SIGNAL BUFFER</div>
+    </div>
+  </div>
+</header>
 
-        function updateClerkUI() {
-            const signedOut = document.getElementById('clerkSignedOut');
-            const signedIn = document.getElementById('clerkSignedIn');
-            const userBtn = document.getElementById('clerkUserBtn');
+<div class="controls">
+  <div class="filters">
+    <button class="chip active" data-filter="all">ALL</button>
+    <button class="chip" data-filter="gaming">GAMING</button>
+    <button class="chip" data-filter="tech">TECH / PC</button>
+  </div>
+  <input class="searchbox" id="searchBox" type="text" placeholder="filter headlines…">
+  <div class="status-line" id="statusLine">initializing…</div>
+</div>
 
-            if (window.Clerk && window.Clerk.user) {
-                signedOut.style.display = 'none';
-                signedIn.style.display = 'flex';
-                // Mount user button
-                Clerk.mountUserButton(userBtn);
-            } else {
-                signedOut.style.display = 'block';
-                signedIn.style.display = 'none';
-            }
-        }
+<main id="feed">
+  <div class="grid" id="grid">
+    <div class="loading-msg">Tuning into gaming &amp; tech feeds…</div>
+  </div>
+</main>
 
-        function openSignIn() {
-            if (window.Clerk) {
-                Clerk.openSignIn();
-            } else {
-                alert('Sign-in service is loading. Please try again in a moment.');
-            }
-        }
+<div class="ad-slot">
+  <div class="box">
+    AD SLOT — reserved for Google AdSense once your site is approved.<br>
+    See the comment block in this file (search "ADSENSE") for how to activate it.
+  </div>
+</div>
 
-        function nav(page) {
-            document.querySelectorAll('.page-content').forEach(el => el.classList.remove('active'));
-            document.getElementById(page + 'Page').classList.add('active');
-        }
+<footer>
+  <div>© <span id="year"></span> Orbit Feed. Headlines link out to their original publishers.</div>
+  <div id="lastUpdated">last sync: —</div>
+</footer>
 
-        function promptNewProject() {
-            document.getElementById('projectNameModal').style.display = 'flex';
-            document.getElementById('projectNameInput').focus();
-        }
+<!-- =====================================================================
+  ADSENSE ACTIVATION (do this once your AdSense account is approved):
+  1. Paste your AdSense auto-ads snippet from your AdSense dashboard
+     just before </head>, e.g.:
+       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+       crossorigin="anonymous"></script>
+  2. Replace the "AD SLOT" box above with your actual <ins class="adsbygoogle">
+     unit code from AdSense, and call (adsbygoogle = window.adsbygoogle || []).push({});
+  3. AdSense requires real, substantial content and a working Privacy Policy
+     page before it will approve a site — add one before applying.
+===================================================================== -->
 
-        function closeProjectModal() {
-            document.getElementById('projectNameModal').style.display = 'none';
-        }
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-        function saveProjectFromModal() {
-            const name = document.getElementById('projectNameInput').value;
-            if (name.trim()) {
-                console.log('Creating project:', name);
-                nav('editor');
-                closeProjectModal();
-            }
-        }
+  /* ---------------- CONFIG ---------------- */
+  const MAX_ITEMS = 60;                    // rolling buffer size — oldest dropped past this
+  const REFRESH_MS = 10 * 60 * 1000;       // auto refresh every 10 minutes
+  const STORAGE_KEY = 'orbitfeed_cache_v1';
 
-        function handleProBtn() {
-            alert('Pro features coming soon!');
-        }
-    </script>
+  // Free, keyless RSS -> JSON bridge (rss2json.com). Swap feeds any time.
+  const FEEDS = [
+    { name: 'IGN',        category: 'gaming', url: 'https://www.ign.com/rss/articles/feed' },
+    { name: 'PC Gamer',   category: 'gaming', url: 'https://www.pcgamer.com/rss/' },
+    { name: 'Polygon',    category: 'gaming', url: 'https://www.polygon.com/rss/index.xml' },
+    { name: 'The Verge',  category: 'tech',   url: 'https://www.theverge.com/rss/index.xml' },
+    { name: 'Engadget',   category: 'tech',   url: 'https://www.engadget.com/rss.xml' },
+  ];
+
+  const RSS2JSON = 'https://api.rss2json.com/v1/api.json?rss_url=';
+
+  /* ---------------- STATE ---------------- */
+  let items = loadCache();
+  let activeFilter = 'all';
+  let searchTerm = '';
+
+  function loadCache(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    }catch(e){ return []; }
+  }
+  function saveCache(list){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }catch(e){}
+  }
+
+  function setStatus(text){
+    document.getElementById('statusLine').textContent = text;
+  }
+
+  /* ---------------- FETCH ---------------- */
+  async function fetchFeed(feed){
+    try{
+      const res = await fetch(RSS2JSON + encodeURIComponent(feed.url));
+      const data = await res.json();
+      if(data.status !== 'ok' || !Array.isArray(data.items)) return [];
+      return data.items.map(it => ({
+        title: it.title,
+        link: it.link,
+        pubDate: it.pubDate,
+        source: feed.name,
+        category: feed.category,
+        desc: (it.description || '').replace(/<[^>]+>/g,'').slice(0,220)
+      }));
+    }catch(e){
+      console.warn('Feed failed:', feed.name, e);
+      return [];
+    }
+  }
+
+  async function refreshAll(){
+    setStatus('pulling signal…');
+    document.getElementById('heroRefresh').disabled = true;
+
+    const results = await Promise.all(FEEDS.map(fetchFeed));
+    const fresh = results.flat();
+
+    if(fresh.length === 0 && items.length === 0){
+      setStatus('feeds unreachable — check network access to api.rss2json.com');
+      document.getElementById('heroRefresh').disabled = false;
+      renderGrid();
+      return;
+    }
+
+    // merge with existing buffer, dedupe by link
+    const merged = [...fresh, ...items];
+    const seen = new Set();
+    let deduped = merged.filter(a => {
+      if(!a.link || seen.has(a.link)) return false;
+      seen.add(a.link);
+      return true;
+    });
+
+    // newest first
+    deduped.sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate));
+
+    // rolling buffer: keep only MAX_ITEMS, oldest fall off
+    items = deduped.slice(0, MAX_ITEMS);
+    saveCache(items);
+
+    document.getElementById('lastUpdated').textContent =
+      'last sync: ' + new Date().toLocaleString();
+    document.getElementById('heroRefresh').disabled = false;
+    setStatus(fresh.length ? 'synced' : 'showing cached signal (feeds unreachable)');
+
+    renderGauge();
+    renderTicker();
+    renderGrid();
+  }
+
+  /* ---------------- RENDER ---------------- */
+  function renderGauge(){
+    const pct = Math.min(items.length / MAX_ITEMS, 1);
+    const circumference = 603; // 2*pi*96
+    const offset = circumference * (1 - pct);
+    document.getElementById('gaugeArc').style.strokeDashoffset = offset;
+    document.getElementById('gaugeCount').textContent = items.length;
+    document.getElementById('gaugeMax').textContent = '/ ' + MAX_ITEMS + ' slots';
+  }
+
+  function timeAgo(dateStr){
+    const d = new Date(dateStr);
+    if(isNaN(d)) return '';
+    const diff = Math.max(0, (Date.now() - d.getTime()) / 1000);
+    if(diff < 3600) return Math.floor(diff/60) + 'm ago';
+    if(diff < 86400) return Math.floor(diff/3600) + 'h ago';
+    return Math.floor(diff/86400) + 'd ago';
+  }
+
+  function renderTicker(){
+    const track = document.getElementById('tickerTrack');
+    const top = items.slice(0, 12);
+    if(top.length === 0){ return; }
+    track.innerHTML = top.map(a => `
+      <span class="ticker-item mono"><span class="dot"></span>
+        <span class="mono" style="color:var(--text-muted)">${a.source}</span>
+        <span class="headline">${escapeHtml(a.title)}</span>
+      </span>
+    `).join('');
+  }
+
+  function renderGrid(){
+    const grid = document.getElementById('grid');
+    let list = items;
+    if(activeFilter !== 'all') list = list.filter(a => a.category === activeFilter);
+    if(searchTerm) list = list.filter(a => a.title.toLowerCase().includes(searchTerm));
+
+    if(list.length === 0){
+      grid.innerHTML = `<div class="empty">No signal in this range yet. Try "Pull latest signal" or clear the filter.</div>`;
+      return;
+    }
+
+    grid.innerHTML = list.map(a => `
+      <a class="card" href="${a.link}" target="_blank" rel="noopener">
+        <div class="card-top">
+          <span class="source-tag ${a.category}">${a.source}</span>
+          <span class="card-time">${timeAgo(a.pubDate)}</span>
+        </div>
+        <div class="card-title">${escapeHtml(a.title)}</div>
+        <div class="card-desc">${escapeHtml(a.desc)}</div>
+        <div class="card-foot">READ STORY →</div>
+      </a>
+    `).join('');
+  }
+
+  function escapeHtml(str){
+    if(!str) return '';
+    return str.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  /* ---------------- EVENTS ---------------- */
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeFilter = chip.dataset.filter;
+      renderGrid();
+    });
+  });
+
+  document.getElementById('searchBox').addEventListener('input', e => {
+    searchTerm = e.target.value.trim().toLowerCase();
+    renderGrid();
+  });
+
+  document.getElementById('heroRefresh').addEventListener('click', refreshAll);
+  document.getElementById('refreshLink').addEventListener('click', e => { e.preventDefault(); refreshAll(); });
+  document.getElementById('clearBuffer').addEventListener('click', () => {
+    items = [];
+    saveCache(items);
+    renderGauge(); renderTicker(); renderGrid();
+    setStatus('buffer cleared');
+  });
+
+  /* ---------------- INIT ---------------- */
+  renderGauge();
+  renderGrid();
+  refreshAll();
+  setInterval(refreshAll, REFRESH_MS);
+</script>
+
 </body>
 </html>
