@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Main body -->
+  <circle cx="32" cy="32" r="28" fill="#0A0E14" stroke="#6FFFB0" stroke-width="4"/>
+  <!-- Orbital ring -->
+  <ellipse cx="32" cy="32" rx="24" ry="8" fill="none" stroke="#6FB8FF" stroke-width="3" transform="rotate(-30 32 32)"/>
+  <!-- Red satellite/ship -->
+  <circle cx="48" cy="22" r="5" fill="#FF5D5D"/>
+</svg>
