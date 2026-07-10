@@ -429,12 +429,28 @@
   </div>
 </main>
 
-<div class="ad-slot">
-  <div class="box">
-    AD SLOT — reserved for Google AdSense once your site is approved.<br>
-    See the comment block in this file (search "ADSENSE") for how to activate it.
-  </div>
+<div class="ad-slot" style="display:flex; justify-content:center;">
+  <!-- Desktop banner -->
+  <iframe class="ad-desktop"
+    sandbox="allow-scripts"
+    style="border:0; width:728px; height:90px;"
+    srcdoc='<body style="margin:0"><script>atOptions={key:"3f3a72de866bf5f9a0626304f6e70510",format:"iframe",height:90,width:728,params:{}}</script><script src="https://www.highperformanceformat.com/3f3a72de866bf5f9a0626304f6e70510/invoke.js"></script></body>'>
+  </iframe>
+
+  <!-- Mobile banner -->
+  <iframe class="ad-mobile"
+    sandbox="allow-scripts"
+    style="border:0; width:320px; height:50px; display:none;"
+    srcdoc='<body style="margin:0"><script>atOptions={key:"538b51d485f759e139431e0c5c26d204",format:"iframe",height:50,width:320,params:{}}</script><script src="https://www.highperformanceformat.com/538b51d485f759e139431e0c5c26d204/invoke.js"></script></body>'>
+  </iframe>
 </div>
+
+<style>
+  @media (max-width: 760px){
+    .ad-desktop{ display:none !important; }
+    .ad-mobile{ display:block !important; }
+  }
+</style>
 
 <footer>
   <div>© <span id="year"></span> Orbit Feed. Headlines link out to their original publishers.</div>
