@@ -461,7 +461,11 @@
   const REFRESH_MS = 10 * 60 * 1000;       // auto refresh every 10 minutes
   const STORAGE_KEY = 'orbitfeed_cache_v1';
 
-  // Free, keyless RSS -> JSON bridge (rss2json.com). Swap feeds any time.
+  // Free RSS -> JSON bridge (rss2json.com). Works keyless but rate-limited
+  // hard — get a free key at https://rss2json.com/register and paste it
+  // below to get 10,000 requests/day instead of a shared, easily-exhausted pool.
+  const RSS2JSON_API_KEY = ''; // <-- paste your free key here, e.g. 'abc123...'
+
   const FEEDS = [
     { name: 'IGN',        category: 'gaming', url: 'https://www.ign.com/rss/articles/feed' },
     { name: 'PC Gamer',   category: 'gaming', url: 'https://www.pcgamer.com/rss/' },
@@ -471,6 +475,7 @@
   ];
 
   const RSS2JSON = 'https://api.rss2json.com/v1/api.json?rss_url=';
+  let lastErrors = [];
 
   /* ---------------- STATE ---------------- */
   let items = loadCache();
@@ -494,9 +499,16 @@
   /* ---------------- FETCH ---------------- */
   async function fetchFeed(feed){
     try{
-      const res = await fetch(RSS2JSON + encodeURIComponent(feed.url));
+      let url = RSS2JSON + encodeURIComponent(feed.url);
+      if(RSS2JSON_API_KEY) url += '&api_key=' + RSS2JSON_API_KEY;
+      const res = await fetch(url);
       const data = await res.json();
-      if(data.status !== 'ok' || !Array.isArray(data.items)) return [];
+      if(data.status !== 'ok' || !Array.isArray(data.items)){
+        const msg = feed.name + ': ' + (data.message || ('HTTP ' + res.status));
+        console.warn('Feed error —', msg);
+        lastErrors.push(msg);
+        return [];
+      }
       return data.items.map(it => ({
         title: it.title,
         link: it.link,
@@ -506,7 +518,9 @@
         desc: (it.description || '').replace(/<[^>]+>/g,'').slice(0,220)
       }));
     }catch(e){
-      console.warn('Feed failed:', feed.name, e);
+      const msg = feed.name + ': ' + e.message;
+      console.warn('Feed failed —', msg);
+      lastErrors.push(msg);
       return [];
     }
   }
@@ -514,12 +528,13 @@
   async function refreshAll(){
     setStatus('pulling signal…');
     document.getElementById('heroRefresh').disabled = true;
+    lastErrors = [];
 
     const results = await Promise.all(FEEDS.map(fetchFeed));
     const fresh = results.flat();
 
     if(fresh.length === 0 && items.length === 0){
-      setStatus('feeds unreachable — check network access to api.rss2json.com');
+      setStatus(lastErrors.length ? lastErrors.join(' | ') : 'feeds unreachable — check network access to api.rss2json.com');
       document.getElementById('heroRefresh').disabled = false;
       renderGrid();
       return;
@@ -544,7 +559,11 @@
     document.getElementById('lastUpdated').textContent =
       'last sync: ' + new Date().toLocaleString();
     document.getElementById('heroRefresh').disabled = false;
-    setStatus(fresh.length ? 'synced' : 'showing cached signal (feeds unreachable)');
+    if(fresh.length){
+      setStatus(lastErrors.length ? ('synced (' + lastErrors.length + ' feed issue: ' + lastErrors.join(' | ') + ')') : 'synced');
+    }else{
+      setStatus('showing cached signal — ' + lastErrors.join(' | '));
+    }
 
     renderGauge();
     renderTicker();
